@@ -1,11 +1,11 @@
 <div class="container" fxLayout="row wrap"  fxLayoutGap="20px">
 
-  <div *ngFor="let club of clubs ">
+  <div *ngFor="let orgcard of orgCards ">
     <mat-card class="card">
-      <mat-card-title class="card-title">{{club.name}} Club</mat-card-title>
-      <mat-card-content class="card-content">Welcome to {{club.name}} Club.<br> Become a Member!</mat-card-content>
+      <mat-card-title class="card-title">{{orgcard.name}} Club</mat-card-title>
+      <mat-card-content class="card-content">Welcome to {{orgcard.name}} Club.<br> Become a Member!</mat-card-content>
 
-      <img class="image" mat-card-image src="{{club.picture.url}}">
+      <img class="image" mat-card-image src="{{orgcard.picture}}">
       <button mat-raised-button  class="button">Join</button>
     </mat-card>
   </div>

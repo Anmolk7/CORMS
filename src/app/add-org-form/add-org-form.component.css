@@ -1,8 +1,18 @@
-.example-container {
-  display: flex;
-  flex-direction: column;
-}
+.card{
+  width: 500px;
+  height: 330px;
+  margin-top: 20px;
 
-.example-container > * {
-  width: 100%;
+  margin-right: auto;
+  margin-left:  auto;
+
+
+}
+.items{
+  width: 450px;
+
+}
+.button{
+  background: green;
+  color: aliceblue;
 }

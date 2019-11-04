@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardViewComponent } from './card-view/card-view.component';
-import {MatButtonModule} from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddOrgFormComponent } from './add-org-form/add-org-form.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import {
+  MatInputModule,
+  MatCardModule,
+  MatButtonModule,
+  MatToolbarModule,
+  MatExpansionModule
+} from "@angular/material";
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+
 
 @NgModule({
   declarations: [
@@ -27,7 +35,12 @@ import {MatSelectModule} from '@angular/material/select';
     MatButtonModule,
     FlexLayoutModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule,
+    MatInputModule,
+    HttpClientModule,
+    MatExpansionModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

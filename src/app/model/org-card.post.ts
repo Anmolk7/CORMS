@@ -1,7 +1,6 @@
 export interface OrgCard {
+  id: string;
   name: string;
   description: string;
-  picture: {
-    url: string;
-  };
+  picture: string;
 }

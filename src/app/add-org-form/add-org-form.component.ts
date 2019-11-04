@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
+import { OrgService } from 'service/org.service';
 
 @Component({
   selector: 'app-add-org-form',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-org-form.component.css']
 })
 export class AddOrgFormComponent implements OnInit {
+  constructor(public orgService: OrgService) {}
+  enteredTitle = "";
+  enteredContent = "";
 
-  constructor() { }
-
-  ngOnInit() {
+  onAddPost(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+    this.orgService.addPosts(form.value.name, form.value.description, form.value.picture);
+    form.resetForm();
   }
+  ngOnInit(){
 
+  }
 }
