@@ -2,12 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express(); //big chain of middleware we apply to incoming requests. Like a big funnel where each part of the funnel that can do something with the request
 const mongoose = require("mongoose");
-const OrgCard= require('./DB.model/orgCardSchema');
+const Post = require("./model/post");
 
 mongoose
-  .connect(
-    "mongodb+srv://anmolk7:lespaul59@cluster0-2wdwj.mongodb.net/corms?retryWrites=true&w=majority"
-  )
+  .connect("mongodb+srv://anmolk7:lespaul59@cluster0-2wdwj.mongodb.net/CORMSNEW?retryWrites=true&w=majority")
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -37,33 +35,31 @@ app.use((req, res, next) => {
 //   next(); // allows to go to the next middleware
 // }); // uses a use() middleware
 // external IP : 47.12.78.4
-app.post("/api/orgcards", (req, res, next) => {
-  const orgcard = new OrgCard({
-    name:req.body.name,
-    description:req.body.description,
+app.post("/api/posts", (req, res, next) => {
+  const post = new Post({
+    name: req.body.name,
+    description: req.body.description,
     picture:req.body.picture
   });
 
-  orgcard.save();// saving document to collection of MongoDB.
+  post.save();// saving document to collection of MongoDB.
 
-  console.log(orgcard);
+  console.log(post);
   res.status(201).json({
     message: "Posts Added Successfully"
   }); //201 new resource was created
 });
 
-app.get("/api/orgcards", (req, res, next) => {
-  //'/api/ indicates this is a rest API.
+app.get("/api/posts", (req, res, next) => {
+  // '/api/ indicates this is a rest API.
   //res.send("Hello from Express.js"); //returns the response
 
- OrgCard.find().then(documents=>{
- console.log("documents: "+JSON.parse(JSON.stringify(documents)));
+ Post.find().then(documents=>{
+console.log("documents :"+JSON.stringify(documents));
   res.status(200).json({
     message: "posts fectched successfully!",
-    orgcard: documents,
-  }
- );
+    posts: documents
+  });
  });
 });
-
 module.exports = app;

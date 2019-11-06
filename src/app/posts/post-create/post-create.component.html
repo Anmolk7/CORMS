@@ -1,0 +1,44 @@
+<mat-card>
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="name"
+        ngModel
+        required
+        placeholder="Name"
+        minlength="3"
+        #name="ngModel">
+      <mat-error *ngIf="name.invalid">Please enter the Organization Name.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="description"
+        ngModel
+        placeholder="Description"
+        required
+        #description="ngModel"></textarea>
+      <mat-error *ngIf="description.invalid">Please enter a description of the Organization.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="picture"
+        ngModel
+        placeholder="Picture URL"
+        minlength="3"
+        #picture="ngModel">
+      <mat-error *ngIf="picture.invalid">Please type a Picture URL .</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      class="addOrgButton"
+      type="submit">Add Organzation</button>
+  </form>
+
+</mat-card>
+

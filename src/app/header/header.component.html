@@ -1,5 +1,9 @@
 <mat-toolbar class="header-color">
   <div class="title-center">
   <span class="title-center"> University of Wisconsin Whitewater - CORMS </span>
+
+  <button mat-raised-button class="addOrgButton" *ngIf="router.url === '/orglist'"   [routerLink]="['/orgcreate']" routerLinkActive="router-link-active" > Add Organization </button>
+  <button mat-raised-button class="doneButton" *ngIf="router.url === '/orgcreate'"   [routerLink]="['/orglist']" routerLinkActive="router-link-active" > Done </button>
+
 </div>
 </mat-toolbar>

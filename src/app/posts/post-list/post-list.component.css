@@ -15,6 +15,12 @@
   height: 360px;
   margin-top: 20px;
 }
+.addOrgButton{
+background-color: rgb(184, 50, 184);
+color: aliceblue;
+margin-left:1375px;
+margin-top: 5px ;
+}
 .button{
   background-color: green;
   color: aliceblue;

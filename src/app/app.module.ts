@@ -1,14 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CardViewComponent } from './card-view/card-view.component';
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AddOrgFormComponent } from './add-org-form/add-org-form.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+
 import {
   MatInputModule,
   MatCardModule,
@@ -16,33 +11,45 @@ import {
   MatToolbarModule,
   MatExpansionModule
 } from "@angular/material";
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+import {MatIconModule} from '@angular/material/icon';
+import { AppComponent } from "./app.component";
+import { PostCreateComponent } from "./posts/post-create/post-create.component";
+import { HeaderComponent } from "./header/header.component";
+import { PostListComponent } from "./posts/post-list/post-list.component";
+import { HttpClientModule } from "@angular/common/http"
+import { AppRoutingModule } from './app-routing.module';
+import {MatMenuModule} from '@angular/material/menu';
+import { OrgProfileComponent } from './org-profile/org-profile.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    PostCreateComponent,
     HeaderComponent,
-    CardViewComponent,
-    AddOrgFormComponent
+    PostListComponent,
+    OrgProfileComponent,
+
+
   ],
   imports: [
     BrowserModule,
-    MatToolbarModule,
+    FormsModule,
     BrowserAnimationsModule,
+    MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
     FlexLayoutModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    MatInputModule,
-    HttpClientModule,
     MatExpansionModule,
-
+    HttpClientModule,
+    AppRoutingModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

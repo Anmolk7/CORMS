@@ -1,0 +1,14 @@
+
+<div class="container" fxLayout="row wrap"  fxLayoutGap="20px">
+  <div *ngFor="let post of posts ">
+    <mat-card class="card">
+      <mat-card-title class="card-title">{{post.name}} Club</mat-card-title>
+      <mat-card-content class="card-content">Welcome to {{post.name}} Club.<br> Become a Member!</mat-card-content>
+
+      <img class="image" mat-card-image src="{{post.picture}}">
+      <button mat-raised-button  class="button">JOIN</button>
+      <button mat-button [routerLink]="['/orgprofile']" routerLinkActive="router-link-active" ><mat-icon>edit</mat-icon> </button>
+    </mat-card>
+  </div>
+
+</div>

@@ -1,10 +1,19 @@
 .title-center {
-  margin: 0 auto;
+  margin-left: 260px;
   font-display: inherit;
+  text-align: center;
 }
-.header-color{
-  background-color:purple;
+.header-color {
+  background-color: purple;
   color: aliceblue;
-
-
+}
+.addOrgButton {
+  background-color: rgb(184, 50, 184);
+  color: aliceblue;
+  margin-left: 400px;
+}
+.doneButton {
+  background-color:green;
+  color: aliceblue;
+  margin-left: 520px;
 }
