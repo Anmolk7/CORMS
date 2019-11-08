@@ -21,10 +21,13 @@ color: aliceblue;
 margin-left:1375px;
 margin-top: 5px ;
 }
+.icon{
+  width:0px;
+}
 .button{
   background-color: green;
   color: aliceblue;
-  margin-left:65px;
+  margin-left:0px;
   margin-top: 0px;
 }
 .card-title{

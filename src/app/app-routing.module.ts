@@ -8,7 +8,8 @@ const appRoutes: Routes = [
   { path:"", redirectTo:"/orglist", pathMatch:"full"},
   { path: "orgcreate", component: PostCreateComponent },
   { path: "orglist", component: PostListComponent },
-  { path:"orgprofile", component: OrgProfileComponent}
+  { path:"orgprofile", component: OrgProfileComponent},
+  { path: "orgedit/:postId", component:PostCreateComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

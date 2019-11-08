@@ -3,11 +3,12 @@
   <div *ngFor="let post of posts ">
     <mat-card class="card">
       <mat-card-title class="card-title">{{post.name}} Club</mat-card-title>
-      <mat-card-content class="card-content">Welcome to {{post.name}} Club.<br> Become a Member!</mat-card-content>
+      <mat-card-content class="card-content">{{post.description}} <br></mat-card-content>
 
       <img class="image" mat-card-image src="{{post.picture}}">
       <button mat-raised-button  class="button">JOIN</button>
-      <button mat-button [routerLink]="['/orgprofile']" routerLinkActive="router-link-active" ><mat-icon>edit</mat-icon> </button>
+      <button mat-button class="icon" [routerLink]="['/orgedit',post.id]" routerLinkActive="router-link-active" ><mat-icon>edit</mat-icon> </button>
+      <button mat-button class="icon" (click)="onDelete(post.id)"><mat-icon> delete </mat-icon></button>
     </mat-card>
   </div>
 

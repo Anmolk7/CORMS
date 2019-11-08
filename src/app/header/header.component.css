@@ -1,5 +1,5 @@
 .title-center {
-  margin-left: 260px;
+  margin-left: 35%;
   font-display: inherit;
   text-align: center;
 }
@@ -16,4 +16,26 @@
   background-color:green;
   color: aliceblue;
   margin-left: 520px;
+}
+.container{
+  margin-right: 0px;
+  margin-left:  0px;
+
+}
+ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+a{
+  text-decoration: none;
+  color: silver;
+  font-size: medium;
+}
+.menu-items{
+
+}
+.spacer{
+  flex: 1 1 auto;
+
 }

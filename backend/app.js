@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const Post = require("./model/post");
 
 mongoose
-  .connect("mongodb+srv://anmolk7:lespaul59@cluster0-2wdwj.mongodb.net/CORMSNEW?retryWrites=true&w=majority")
+  .connect(
+    "mongodb+srv://anmolk7:lespaul59@cluster0-2wdwj.mongodb.net/CORMSNEW?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -39,10 +41,10 @@ app.post("/api/posts", (req, res, next) => {
   const post = new Post({
     name: req.body.name,
     description: req.body.description,
-    picture:req.body.picture
+    picture: req.body.picture
   });
 
-  post.save();// saving document to collection of MongoDB.
+  post.save(); // saving document to collection of MongoDB.
 
   console.log(post);
   res.status(201).json({
@@ -53,13 +55,33 @@ app.post("/api/posts", (req, res, next) => {
 app.get("/api/posts", (req, res, next) => {
   // '/api/ indicates this is a rest API.
   //res.send("Hello from Express.js"); //returns the response
-
- Post.find().then(documents=>{
-console.log("documents :"+JSON.stringify(documents));
-  res.status(200).json({
-    message: "posts fectched successfully!",
-    posts: documents
+  Post.find().then(documents => {
+    console.log("documents :" + JSON.stringify(documents));
+    res.status(200).json({
+      message: "posts fectched successfully!",
+      posts: documents
+    });
   });
- });
 });
+app.delete("/api/posts/:id", (req, res, nex) => {
+  Post.deleteOne({_id:req.params.id}).then(result=>{
+    console.log(result);
+    console.log(req.params.id);
+    res.status(200).json({message: "delete successfull"});
+  })
+
+});
+
+app.put("/api/posts/:id", (req,res,next)=>{
+  const post= new Post({
+    _id:req.body.id,
+    name:req.body.name,
+    description: req.body.description,
+    picture:req.body.picture
+  });
+  Post.updateOne({_id:req.params.id},post).then(result=>{
+    console.log(result);
+    res.status(200).json({message:"Update successful"});
+  });
+})
 module.exports = app;

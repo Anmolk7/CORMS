@@ -5,7 +5,7 @@
         matInput
         type="text"
         name="name"
-        ngModel
+        [ngModel]="post?.name"
         required
         placeholder="Name"
         minlength="3"
@@ -17,7 +17,7 @@
         matInput
         rows="4"
         name="description"
-        ngModel
+        [ngModel]="post?.description"
         placeholder="Description"
         required
         #description="ngModel"></textarea>
@@ -28,7 +28,7 @@
         matInput
         type="text"
         name="picture"
-        ngModel
+        [ngModel]="post?.picture"
         placeholder="Picture URL"
         minlength="3"
         #picture="ngModel">
@@ -37,8 +37,8 @@
     <button
       mat-raised-button
       class="addOrgButton"
-      type="submit">Add Organzation</button>
+      type="submit">Save Organzation</button>
   </form>
-
+<!-- <button mat-raised-button class="button" [routerLink]="['/orglist']" routerLinkActive="router-link-active" >Done</button> -->
 </mat-card>
 

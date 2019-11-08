@@ -1,5 +1,7 @@
-main {
+.container {
   margin-top: 1rem;
   width: 80%;
   margin: auto;
+  background-color: indianred;
 }
+
