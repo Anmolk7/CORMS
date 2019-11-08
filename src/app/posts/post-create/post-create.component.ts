@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { PostService } from "../post.service";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Post } from "../post.model";
 
 @Component({
@@ -15,7 +15,8 @@ export class PostCreateComponent implements OnInit {
   post: Post;
   constructor(
     public postService: PostService,
-    public activeRoute: ActivatedRoute
+    public activeRoute: ActivatedRoute,
+    public router: Router
   ) {}
 
   ngOnInit() {

@@ -4,7 +4,7 @@ textarea {
 }
 
 .addOrgButton{
-  background-color: rgb(184, 50, 184);
+  background-color: rgb(35, 207, 72);
   color: aliceblue;
 
   }
@@ -14,3 +14,6 @@ textarea {
     margin-left:15px;
     margin-top: 10px;
   }
+.warnButton{
+  margin-left:10px ;
+}

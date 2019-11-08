@@ -37,8 +37,23 @@
     <button
       mat-raised-button
       class="addOrgButton"
+  
       type="submit">Save Organzation</button>
+      <button
+      mat-raised-button
+      color="warn"
+      [routerLink]="['/orglist']"
+      class="warnButton"
+      type="submit">Cancel</button>
   </form>
 <!-- <button mat-raised-button class="button" [routerLink]="['/orglist']" routerLinkActive="router-link-active" >Done</button> -->
 </mat-card>
 
+<div *ngIf="router.url!='/orgcreate'">
+<mat-card>
+Current Members
+</mat-card>
+<mat-card>
+Requests
+</mat-card>
+</div>
