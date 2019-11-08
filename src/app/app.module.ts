@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import {
   MatInputModule,
@@ -12,15 +13,17 @@ import {
   MatExpansionModule
 } from "@angular/material";
 
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from "./app.component";
-import { PostCreateComponent } from "./posts/post-create/post-create.component";
+import { PostCreateComponent, PizzaPartyComponent } from "./posts/post-create/post-create.component";
 import { HeaderComponent } from "./header/header.component";
 import { PostListComponent } from "./posts/post-list/post-list.component";
 import { HttpClientModule } from "@angular/common/http"
 import { AppRoutingModule } from './app-routing.module';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { OrgProfileComponent } from './org-profile/org-profile.component';
+
+
 
 
 
@@ -31,9 +34,10 @@ import { OrgProfileComponent } from './org-profile/org-profile.component';
     HeaderComponent,
     PostListComponent,
     OrgProfileComponent,
-
-
-  ],
+    PizzaPartyComponent
+   ],
+   entryComponents: [PizzaPartyComponent],
+   exports: [ PizzaPartyComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -47,9 +51,10 @@ import { OrgProfileComponent } from './org-profile/org-profile.component';
     MatExpansionModule,
     HttpClientModule,
     AppRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

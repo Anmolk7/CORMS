@@ -37,7 +37,7 @@
     <button
       mat-raised-button
       class="addOrgButton"
-  
+    
       type="submit">Save Organzation</button>
       <button
       mat-raised-button
@@ -48,12 +48,32 @@
   </form>
 <!-- <button mat-raised-button class="button" [routerLink]="['/orglist']" routerLinkActive="router-link-active" >Done</button> -->
 </mat-card>
-
+<br>
+<br>
 <div *ngIf="router.url!='/orgcreate'">
-<mat-card>
-Current Members
-</mat-card>
-<mat-card>
-Requests
-</mat-card>
+
+<p style="text-align: center; font-size: 20px;"> Current Members </p>
+<mat-accordion multi="true" >
+  <mat-expansion-panel >
+    <mat-expansion-panel-header>
+        {{post?.name}}
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <button mat-button color="warn">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<br>
+<p style="text-align: center; font-size: 20px;">Requests</p>
+<mat-accordion multi="true" >
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      {{ post?.name }}
+</mat-expansion-panel-header>
+<mat-action-row>
+  <button mat-button color="primary">ADD</button>
+</mat-action-row>
+</mat-expansion-panel>
+
+</mat-accordion>
 </div>

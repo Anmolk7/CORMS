@@ -17,3 +17,10 @@ textarea {
 .warnButton{
   margin-left:10px ;
 }
+::ng-deep .snackbar{
+  background:rgb(139, 31, 130);
+  text-align: center;
+  color: rgb(255, 254, 254);
+  font-size: 30px;
+ 
+}

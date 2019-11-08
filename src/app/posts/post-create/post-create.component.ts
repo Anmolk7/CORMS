@@ -3,6 +3,8 @@ import { NgForm } from "@angular/forms";
 import { PostService } from "../post.service";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Post } from "../post.model";
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: "app-post-create",
@@ -13,10 +15,12 @@ export class PostCreateComponent implements OnInit {
   private mode = "create";
   private postId: string;
   post: Post;
+  duration=2;
   constructor(
     public postService: PostService,
     public activeRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -34,8 +38,15 @@ export class PostCreateComponent implements OnInit {
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
+   
       return;
     }
+    // snackbar pop-up 
+    this.snackBar.openFromComponent(PizzaPartyComponent, {
+      duration: this.duration * 1000,
+      panelClass: ['snackbar']
+    });
+
     if (this.mode === "create") {
       this.postService.addPosts(
         form.value.name,
@@ -52,4 +63,13 @@ export class PostCreateComponent implements OnInit {
     }
     form.resetForm();
   }
+}
+
+@Component({
+  selector: 'app-post-create-pop',
+  templateUrl: './post-success.html',
+  styleUrls: ["./post-create.component.css"]
+})
+export class PizzaPartyComponent {
+  constructor(public router:Router){}
 }
