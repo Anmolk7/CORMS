@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { PostService } from "../post.service";
+import { PostService } from "../../service/post.service";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Post } from "../post.model";
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
