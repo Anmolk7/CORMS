@@ -8,11 +8,13 @@
       <a mat-button [routerLink]="['/orgcreate']" routerLinkActive="mat-accent"
         *ngIf="router.url==='/orglist'">Add Organization</a>
      </li>
-    </ul>
-    <!-- <li *ngIf="userIsAuthenticated" >
+    
+
+    <li *ngIf="userIsAuthenticated" >
       <a mat-button [routerLink]="['/orglist']" routerLinkActive="router-link-active"
         *ngIf="router.url!=='/orglist'"> Done </a> 
-    </li> -->
+    </li>
+  </ul>
    
       <a *ngIf="!userIsAuthenticated" mat-button [routerLink]="['/login']" routerLinkActive="router-link-active"> Login </a>
     
