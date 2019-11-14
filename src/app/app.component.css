@@ -1,7 +1,7 @@
 .container {
   margin-top: 1rem;
-  width: 80%;
+  width: 100%;
   margin: auto;
-  background-color: indianred;
+  background-color: rgb(192, 189, 189);
 }
 

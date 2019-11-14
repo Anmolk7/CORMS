@@ -18,10 +18,13 @@ import { AppComponent } from "./app.component";
 import { PostCreateComponent, PizzaPartyComponent } from "./posts/post-create/post-create.component";
 import { HeaderComponent } from "./header/header.component";
 import { PostListComponent } from "./posts/post-list/post-list.component";
-import { HttpClientModule } from "@angular/common/http"
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { AppRoutingModule } from './app-routing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { OrgProfileComponent } from './org-profile/org-profile.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 
@@ -34,10 +37,12 @@ import { OrgProfileComponent } from './org-profile/org-profile.component';
     HeaderComponent,
     PostListComponent,
     OrgProfileComponent,
-    PizzaPartyComponent
-   ],
-   entryComponents: [PizzaPartyComponent],
-   exports: [ PizzaPartyComponent ],
+    PizzaPartyComponent,
+    LoginComponent,
+    SignupComponent
+  ],
+  entryComponents: [PizzaPartyComponent],
+  exports: [PizzaPartyComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -54,7 +59,7 @@ import { OrgProfileComponent } from './org-profile/org-profile.component';
     MatIconModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }], //angular will look for http_interceptors which we point to the AuthInterceptor
   bootstrap: [AppComponent]
 })
 export class AppModule { }

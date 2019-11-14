@@ -4,6 +4,8 @@ import { PostService } from "../../service/post.service";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Post } from "../post.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -16,11 +18,14 @@ export class PostCreateComponent implements OnInit {
   private postId: string;
   post: Post;
   duration=2;
+  private authStatus: Subscription;
+  userIsAuthenticated=false;
   constructor(
     public postService: PostService,
     public activeRoute: ActivatedRoute,
     public router: Router,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -35,6 +40,13 @@ export class PostCreateComponent implements OnInit {
         this.postId = null;
       }
     });
+    this.userIsAuthenticated=this.authService.getIsAuth();
+    console.log("Authenticated ?"+this.userIsAuthenticated)
+
+    this.authStatus=this.authService.getAuthStatusListener().subscribe(isAuthenticated=>{
+      this.userIsAuthenticated=isAuthenticated
+    })
+    console.log("Authenticated ?"+this.userIsAuthenticated)
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
