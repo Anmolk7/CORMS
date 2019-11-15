@@ -23,7 +23,8 @@ export class PostService {
               name: post.name,
               description: post.description,
               picture: post.picture,
-              id: post._id
+              id: post._id,
+              creator: post.creator
             };
           });
         })
@@ -41,7 +42,8 @@ export class PostService {
       id: null,
       name: name,
       description: description,
-      picture: picture
+      picture: picture,
+      creator:null
     };
     this.http
       .post<{ message: string }>("http://localhost:3000/api/posts", post)
@@ -72,7 +74,8 @@ export class PostService {
       id: id,
       name: name,
       description: description,
-      picture: picture
+      picture: picture,
+      creator:null
     };
     this.http
       .put("http://localhost:3000/api/posts/" + post.id, post)

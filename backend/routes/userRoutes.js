@@ -20,9 +20,11 @@ router.post("/signup", (req, res, next) => {
                 });
             })
                 .catch(err => {
+
                     res.status(500).json({
-                        error: err
+                        message: 'Username already exists!'
                     })
+
                 })
         });
 })
@@ -30,27 +32,29 @@ router.post("/signup", (req, res, next) => {
 router.post("/login", (req, res, next) => {
     let fetchedUser;
     User.findOne({ email: req.body.email })
-    .then(user => {   
-        console.log(user)
-        if (!user) {
-            return res.status(401).json({
-                message: "User not found!"
-            });
-        }
-        fetchedUser=user;
-        return bcrypt.compare(req.body.password, user.password);
-    }).then(result => {
-        console.log(result)
-        if (!result) {
-            return res.status(401).json({ message: "Authentication Failed" });
-        }
+        .then(user => {
+            console.log(user)
+            if (!user) {
 
-        const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id }, 'secret_hash', { expiresIn: "1h" });
-        res.status(200).json({ token: token, expiresIn:3600 })
+                return res.status(401).json({
+                    message: "User not found!"
+                });
+            }
+            fetchedUser = user;
+            return bcrypt.compare(req.body.password, user.password);
+        }).then(result => {
+            console.log(result)
+            if (!result) {
 
-    }).catch(err => {
-        return res.status(401).json({ message: "User Auth Failed!" });
-    })
+                return res.status(401).json({ message: "Invalid username and password" });
+            }
+
+            const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id }, 'secret_hash', { expiresIn: "1h" });
+            res.status(200).json({ token: token, expiresIn: 3600, userId: fetchedUser._id })
+
+        }).catch(err => {
+            return res.status(401).json({ message: "User Authentication Failed! Please check your username and password!" })
+        })
 });
 
 module.exports = router;

@@ -7,7 +7,8 @@ router.post("", checkAuth, (req, res, next) => {
   const post = new Post({
     name: req.body.name,
     description: req.body.description,
-    picture: req.body.picture
+    picture: req.body.picture,
+    creator:req.userData.userId
   });
 
   post.save(); // saving document to collection of MongoDB.
@@ -30,10 +31,13 @@ router.get("", (req, res, next) => {
   });
 });
 router.delete("/:id", checkAuth, (req, res, nex) => {
-  Post.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    console.log(req.params.id);
-    res.status(200).json({ message: "delete successfull" });
+  Post.deleteOne({ _id: req.params.id ,creator:req.userData.userId }).then(result => {
+    if(result.n>0){
+      res.status(200).json({ message: "Update successful" });
+    }
+    else{
+      res.status(401).json({ message: "Not Authorized!" });
+    }
   })
 
 });
@@ -43,11 +47,17 @@ router.put("/:id",checkAuth, (req, res, next) => {
     _id: req.body.id,
     name: req.body.name,
     description: req.body.description,
-    picture: req.body.picture
+    picture: req.body.picture,
+    creator:req.userData.userId
   });
-  Post.updateOne({ _id: req.params.id }, post).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Update successful" });
+  Post.updateOne({ _id: req.params.id, creator:req.userData.userId }, post).then(result => {
+    if(result.nModified>0){
+      res.status(200).json({ message: "Update successful" });
+    }
+    else{
+      res.status(401).json({ message: "Not Authorized!" });
+    }
+ 
   });
 })
 module.exports = router;

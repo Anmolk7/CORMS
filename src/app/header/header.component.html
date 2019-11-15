@@ -4,7 +4,7 @@
   <span class="spacer"></span>
 
   <ul>
-    <li *ngIf="userIsAuthenticated" >
+    <li *ngIf="userIsAuthenticated && userId==='5dcdfbc72b62ec465537226f'" >
       <a mat-button [routerLink]="['/orgcreate']" routerLinkActive="mat-accent"
         *ngIf="router.url==='/orglist'">Add Organization</a>
      </li>

@@ -10,7 +10,8 @@ import {
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatDialogModule,
 } from "@angular/material";
 
 import { MatIconModule } from '@angular/material/icon';
@@ -25,6 +26,8 @@ import { OrgProfileComponent } from './org-profile/org-profile.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 
 
@@ -39,9 +42,10 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     OrgProfileComponent,
     PizzaPartyComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorComponent
   ],
-  entryComponents: [PizzaPartyComponent],
+  entryComponents: [PizzaPartyComponent, ErrorComponent],
   exports: [PizzaPartyComponent],
   imports: [
     BrowserModule,
@@ -57,9 +61,11 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HttpClientModule,
     AppRoutingModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }], //angular will look for http_interceptors which we point to the AuthInterceptor
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+              { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }], //angular will look for http_interceptors which we point to the AuthInterceptor
   bootstrap: [AppComponent]
 })
 export class AppModule { }
