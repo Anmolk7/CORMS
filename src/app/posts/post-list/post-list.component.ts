@@ -4,6 +4,7 @@ import { Subscription } from "rxjs";
 import { Post } from "../post.model";
 import { PostService } from "../../service/post.service";
 import { AuthService } from 'src/app/auth/auth.service';
+import { Roster } from '../roster.model';
 
 @Component({
   selector: "app-post-list",
@@ -17,20 +18,26 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   { title: "Third Post", content: "This is the third post's content" }
   // ];
   posts: Post[] = [];
+  rosters: Roster[]=[];
   private postsSub: Subscription;
+
   private authStatus: Subscription;
   userIsAuthenticated=false;
   userId:string;
+  username:string;
+
 
 
   ngOnInit() {
     this.postService.getPosts();
+  
     this.userId=this.authService.getUserId();
+    this.username=this.authService.getUsername();
     this.postsSub = this.postService
       .getPostUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts;
-        console.log(this.posts);
+       // console.log("posts "+this.posts);
       });
       this.userIsAuthenticated=this.authService.getIsAuth();
       this.userId=this.authService.getUserId();
@@ -48,6 +55,12 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
   onDelete(postId: string) {
     this.postService.deletePost(postId);
+  }
+  onJoin(organization:string){
+  alert('Requested!')
+   this.postService.joinOrg(this.username,organization);
+   // console.log(organization)
+ 
   }
   ngOnDestroy() {
     this.postsSub.unsubscribe();

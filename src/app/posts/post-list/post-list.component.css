@@ -8,13 +8,13 @@
 }
 .image{
   width:200px;
-  height:200px;
+  height:180px;
   margin-left: 0.1px;
 }
 .card{
   width: 230px;
-  height: 360px;
-  margin-top: 20px;
+  height: 330px;
+  margin-top: 12px;
 }
 .addOrgButton{
 background-color: rgb(184, 50, 184);
@@ -38,4 +38,5 @@ margin-top: 5px ;
 .card-content{
   font-size: 12px;
   text-align: center;
+  height: 20px;
 }

@@ -3,12 +3,14 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import { Roster } from '../posts/roster.model';
 
 @Injectable({ providedIn: "root" }) //uses same instance where ever it is injected
 export class PostService {
   private posts: Post[] = [];
+  private roster: Roster[]=[];
   private postUpdated = new Subject<Post[]>();
-
+  private rosterUpdated = new Subject<Roster[]>();
   constructor(private http: HttpClient) {}
 
   getPosts() {
@@ -34,9 +36,50 @@ export class PostService {
         this.postUpdated.next([...this.posts]);
       });
   }
+  getMembers(){
+    this.http
+    .get<{ message: string; rosters: any }>("http://localhost:3000/api/join")
+    .pipe(
+      map(memberData => {
+        //return id as _id
+        return memberData.rosters.map(roster => {
+          return {
+            username: roster.username,
+            organization:roster.organization
+          };
+        });
+      })
+    )
+    .subscribe(transformedRosters => {
+      this.roster = transformedRosters;
+      this.rosterUpdated.next([...this.roster]);
+   });
+
+  }
+  getRosterUpdateListener(){
+    return this.rosterUpdated.asObservable();
+  }
   getPostUpdateListener() {
     return this.postUpdated.asObservable();
   }
+
+  getPost(id:string){
+    return this.http.get<{_id:string, name:string, description:string, picture:string, creator:string}>("http://localhost:3000/api/posts/"+id);
+  }
+  joinOrg(username:string, organization:string){
+    const roster: Roster={
+      username:username,
+      organization:organization
+    }
+    this.http.post<{message:string}>("http://localhost:3000/api/join",roster)  .subscribe(responseData => {
+      console.log(
+        "response Data " + responseData.message + JSON.stringify(roster)
+      );
+      this.roster.push(roster);
+      this.rosterUpdated.next([...this.roster]);
+    });
+  }
+
   addPosts(name: string, description: string, picture: string) {
     const post: Post = {
       id: null,
@@ -79,6 +122,14 @@ export class PostService {
     };
     this.http
       .put("http://localhost:3000/api/posts/" + post.id, post)
-      .subscribe(response => console.log(response));
+      .subscribe(response => {
+        const updatedPosts=[...this.posts];
+        const oldPostIndex=updatedPosts.findIndex(p=>p.id===post.id);
+        updatedPosts[oldPostIndex]=post;
+        this.posts=updatedPosts;
+        this.postUpdated.next([...this.posts]);
+      });
   }
+
+  
 }

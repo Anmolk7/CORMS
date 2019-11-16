@@ -6,6 +6,7 @@ import { Post } from "../post.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Roster } from '../roster.model';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class PostCreateComponent implements OnInit {
   post: Post;
   duration=2;
   private authStatus: Subscription;
+  private rosterSub: Subscription;
+  rosters: Roster[]=[];
   userIsAuthenticated=false;
   constructor(
     public postService: PostService,
@@ -34,12 +37,21 @@ export class PostCreateComponent implements OnInit {
         //extract postId from current URL
         this.mode = "edit";
         this.postId = paramMap.get("postId");
-        this.post = this.postService.getPostId(this.postId);
+        this.postService.getPost(this.postId).subscribe(postData=>{
+            this.post={id:postData._id, name:postData.name, description:postData.description, picture:postData.picture, creator:postData.creator }
+        });
       } else {
         this.mode = "create";
         this.postId = null;
       }
     });
+    this.postService.getMembers();
+    this.rosterSub= this.postService.getRosterUpdateListener()
+    .subscribe((rosters:Roster[])=>{
+      this.rosters=rosters;
+      console.log("Rosters: "+JSON.stringify(this.rosters));
+    });
+   
     this.userIsAuthenticated=this.authService.getIsAuth();
     console.log("Authenticated ?"+this.userIsAuthenticated)
 

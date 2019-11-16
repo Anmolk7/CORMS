@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Post = require("./model/post");
 const postRoutes=require("./routes/postRoutes")
 const userRoutes=require("./routes/userRoutes")
+const rosterRoutes=require("./routes/rosterRoutes")
 
 mongoose
   .connect(
@@ -41,4 +42,5 @@ app.use((req, res, next) => {
 // external IP : 47.12.78.4
 app.use("/api/posts",postRoutes)
 app.use("/api/user",userRoutes)
+app.use("/api/join", rosterRoutes)
 module.exports=app

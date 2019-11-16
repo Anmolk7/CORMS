@@ -1,12 +1,12 @@
 
-<div class="container" fxLayout="row wrap" fxLayoutGap="20px">
+<div class="container" fxLayout="row wrap" fxLayoutGap="13px">
   <div *ngFor="let post of posts ">
     <mat-card class="card">
       <mat-card-title class="card-title">{{post.name}} Club</mat-card-title>
       <mat-card-content class="card-content">{{post.description}} <br></mat-card-content>
 
       <img class="image" mat-card-image src="{{post.picture}}">
-      <button *ngIf="userIsAuthenticated " mat-raised-button  class="button">JOIN</button>
+      <button *ngIf="userIsAuthenticated " mat-raised-button (click)="onJoin(post.name)"  class="button">JOIN</button>
       
       <button *ngIf="userIsAuthenticated && userId===post.creator"  mat-button class="icon" [routerLink]="['/orgedit',post.id]" routerLinkActive="router-link-active" ><mat-icon>edit</mat-icon> </button>
 

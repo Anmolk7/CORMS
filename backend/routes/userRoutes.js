@@ -50,7 +50,7 @@ router.post("/login", (req, res, next) => {
             }
 
             const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id }, 'secret_hash', { expiresIn: "1h" });
-            res.status(200).json({ token: token, expiresIn: 3600, userId: fetchedUser._id })
+            res.status(200).json({ token: token, expiresIn: 3600, userId: fetchedUser._id, username:fetchedUser.email })
 
         }).catch(err => {
             return res.status(401).json({ message: "User Authentication Failed! Please check your username and password!" })
