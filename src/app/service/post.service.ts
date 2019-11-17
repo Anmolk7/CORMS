@@ -63,6 +63,23 @@ export class PostService {
     return this.postUpdated.asObservable();
   }
 
+  getAllMembers(){
+    return this.http
+    .get<{rosters: any }>("http://localhost:3000/api/join")
+    .pipe(
+      map(memberData => {
+        //return id as _id
+        return memberData.rosters.map(roster => {
+          return {
+            username: roster.username,
+            organization:roster.organization
+          };
+        });
+      })
+    )
+  
+  }
+
   getPost(id:string){
     return this.http.get<{_id:string, name:string, description:string, picture:string, creator:string}>("http://localhost:3000/api/posts/"+id);
   }
