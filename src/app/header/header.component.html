@@ -1,5 +1,10 @@
 <mat-toolbar class="header-color">
-
+  <ul>
+    <li *ngIf="userIsAuthenticated">
+      <a style="font-size: 15px;"> Welcome {{username}}</a>
+    </li>
+  </ul>
+  <span class="spacer"></span>
   <span class="title-center"> University of Wisconsin Whitewater - CORMS </span>
   <span class="spacer"></span>
 
@@ -8,22 +13,22 @@
       <a mat-button [routerLink]="['/orgcreate']" routerLinkActive="mat-accent"
         *ngIf="router.url==='/orglist'">Add Organization</a>
      </li>
-    
+
 
     <li *ngIf="userIsAuthenticated" >
       <a mat-button [routerLink]="['/orglist']" routerLinkActive="router-link-active"
-        *ngIf="router.url!=='/orglist'"> Done </a> 
+        *ngIf="router.url!=='/orglist'"> Done </a>
     </li>
   </ul>
-   
+
       <a *ngIf="!userIsAuthenticated" mat-button [routerLink]="['/login']" routerLinkActive="router-link-active"> Login </a>
-    
-    
+
+
         <a *ngIf="!userIsAuthenticated" mat-button [routerLink]="['/signup']" routerLinkActive="router-link-active"> Signup </a>
-    
-    
+
+
       <button *ngIf="userIsAuthenticated" mat-raised-button color="primary" (click)="logout()">Logout</button>
-    
+
 
   <!--
   <button mat-raised-button class="addOrgButton" *ngIf="router.url === '/orglist'"   [routerLink]="['/orgcreate']" routerLinkActive="router-link-active" > Add Organization </button>

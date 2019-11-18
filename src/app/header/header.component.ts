@@ -12,9 +12,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
   userIsAuthenticated=false;
   userId:string;
   private authListenerSubs: Subscription;
+  username:string;
   constructor(public router: Router, private authService:AuthService) {}
   ngOnInit(){
     this.userId=this.authService.getUserId();
+    this.username=this.authService.getUsername();
     console.log("header userId: "+this.userId)
     this.userIsAuthenticated=this.authService.getIsAuth();
     this.authListenerSubs=this.authService.getAuthStatusListener().subscribe(isAuthenticated=>{
@@ -28,5 +30,5 @@ export class HeaderComponent implements OnInit, OnDestroy{
   logout(){
     this.authService.logout();
   }
-  
+
 }
