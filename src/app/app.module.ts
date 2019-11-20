@@ -22,7 +22,7 @@ import { PostListComponent } from "./posts/post-list/post-list.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { AppRoutingModule } from './app-routing.module';
 import { MatMenuModule } from '@angular/material/menu';
-import { OrgProfileComponent } from './org-profile/org-profile.component';
+import { OrgProfileComponent } from './user-profile/org-profile.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';

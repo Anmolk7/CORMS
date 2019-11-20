@@ -2,7 +2,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { PostListComponent } from "./posts/post-list/post-list.component";
-import { OrgProfileComponent } from './org-profile/org-profile.component';
+import { OrgProfileComponent } from './user-profile/org-profile.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthGuard } from './auth/auth.guard';

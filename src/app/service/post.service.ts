@@ -85,6 +85,7 @@ export class PostService {
   }
   joinOrg(username:string, organization:string){
     const roster: Roster={
+      id:null,
       username:username,
       organization:organization
     }

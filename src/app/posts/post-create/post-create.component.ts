@@ -23,6 +23,8 @@ export class PostCreateComponent implements OnInit {
   private rosterSub: Subscription;
   rosters: Roster[]=[];
   userIsAuthenticated=false;
+  currentMembers: Roster[];
+  requestingMembers: Roster[];
   constructor(
     public postService: PostService,
     public activeRoute: ActivatedRoute,
