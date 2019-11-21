@@ -25,7 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.userId=this.authService.getUserId();
       
       this.username=this.authService.getUsername();
+      if(this.username){
       this.user=this.username.split('@')[0].toUpperCase();
+      }
       console.log("user: "+this.userId+" "+this.username)
     })
   }
