@@ -15,7 +15,11 @@ mat-card{
   padding-top:15px;
   padding-bottom: 15px;
   width: 400px;
- 
- 
+}
+
+.image{
+  width:200px;
+  height:180px;
+  margin-left: 60px;
 }
 

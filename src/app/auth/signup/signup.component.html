@@ -1,8 +1,10 @@
 <div class="container">
     <mat-card>
         <form (submit)="onSignUp(signForm)" #signForm="ngForm">
+                <img class="image" mat-card-image src="../../assets/image/image_warhawks.png">
+                <br>
 
-            <mat-form-field style="margin-top:50px;">
+            <mat-form-field style="margin-top:0px;">
                 <input matInput type="email" ngModel name="email" placeholder="Email" #emailInput="ngModel" required
                     email>
                 <mat-error *ngIf="emailInput.invalid">Please enter a valid Email.</mat-error>

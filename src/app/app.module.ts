@@ -22,12 +22,13 @@ import { PostListComponent } from "./posts/post-list/post-list.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { AppRoutingModule } from './app-routing.module';
 import { MatMenuModule } from '@angular/material/menu';
-import { OrgProfileComponent } from './user-profile/org-profile.component';
+
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
@@ -39,11 +40,12 @@ import { ErrorComponent } from './error/error.component';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
-    OrgProfileComponent,
+  
     PizzaPartyComponent,
     LoginComponent,
     SignupComponent,
-    ErrorComponent
+    ErrorComponent,
+    UserProfileComponent
   ],
   entryComponents: [PizzaPartyComponent, ErrorComponent],
   exports: [PizzaPartyComponent],

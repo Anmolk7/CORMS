@@ -47,6 +47,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onJoin(organization: string, joinButton: MatButton) {
     console.log(joinButton._elementRef.nativeElement);
+    
     this.postService.getAllMembers().subscribe(roster => {
       this.rosters = roster
       this.duplicateRoster = this.rosters.find((e: Roster) => e.username === this.username && e.organization === organization)

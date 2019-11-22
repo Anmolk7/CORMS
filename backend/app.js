@@ -7,6 +7,7 @@ const postRoutes=require("./routes/postRoutes")
 const userRoutes=require("./routes/userRoutes")
 const rosterRoutes=require("./routes/rosterRoutes")
 
+
 mongoose
   .connect(
     "mongodb+srv://anmolk7:lespaul59@cluster0-2wdwj.mongodb.net/CORMSNEW?retryWrites=true&w=majority"
@@ -35,12 +36,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use((req, res, next) => {
-//   console.log("First middleware");
-//   next(); // allows to go to the next middleware
-// }); // uses a use() middleware
-// external IP : 47.12.78.4
+
 app.use("/api/posts",postRoutes)
-app.use("/api/user",userRoutes)
+app.use("/api/user/",userRoutes)
 app.use("/api/join", rosterRoutes)
 module.exports=app

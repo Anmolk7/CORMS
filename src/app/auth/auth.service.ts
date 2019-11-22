@@ -103,7 +103,7 @@ export class AuthService {
     }
 
     private setAuthTime(duration: number) {
-        console.log("setting duration " + duration);
+        //console.log("setting duration " + duration);
         this.tokenTime = setTimeout(() => { this.logout(); }, duration * 1000)
     }
     private authSave(token: string, expireDate: Date, userId:string, username:string) {

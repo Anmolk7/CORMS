@@ -2,7 +2,8 @@
 
 
   <img class="image" *ngIf="userIsAuthenticated" style=" height:60px; width: 60px; "
-    src="https://img.pngio.com/profile-icon-png-image-free-download-searchpngcom-profile-icon-png-673_673.png">
+    src="https://img.pngio.com/profile-icon-png-image-free-download-searchpngcom-profile-icon-png-673_673.png"
+    [routerLink]="['/user',userId]" routerLinkActive="router-link-active">
     <ul>
       <li *ngIf="userIsAuthenticated">
         <a style="font-size: 15px;"> {{user}}</a>
@@ -10,7 +11,7 @@
     </ul>
 
   <span class="spacer"></span>
-  <span class="title-center"> University of Wisconsin Whitewater - CORMS </span>
+  <span class="title-center" routerLink="/orglist"> University of Wisconsin Whitewater - CORMS </span>
   <span class="spacer"></span>
 
   <ul>

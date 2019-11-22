@@ -2,7 +2,16 @@ const express = require("express");
 const router = express.Router();
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const checkAuth = require("../middleware/check-auth");
+
+var userId;
+var date= new Date;
+var dateString;
+
+//console.log(dateString);
+//const imagePath= require("../../../CORMS/src/assets/image"
 
 router.post("/signup", (req, res, next) => {
 
@@ -40,6 +49,7 @@ router.post("/login", (req, res, next) => {
                     message: "User not found!"
                 });
             }
+            this.userId=user;
             fetchedUser = user;
             return bcrypt.compare(req.body.password, user.password);
         }).then(result => {
@@ -56,5 +66,33 @@ router.post("/login", (req, res, next) => {
             return res.status(401).json({ message: "User Authentication Failed! Please check your username and password!" })
         })
 });
+
+
+const storage = multer.diskStorage({
+    
+    destination: (req, file, callBack) => {
+      callBack(null, '../../../CORMS/CORMS/src/assets/image')
+    },
+    filename: (req, file, callBack) => {  
+      //callBack(null, `image_${file.originalname}`)
+     // this.userId=localStorage.getItem("userId");
+      this.dateString=date.getFullYear()+""+date.getDate()+""+""+date.getHours()+""+date.getMinutes()
+      callBack(null, this.userId._id+'.'+'jpeg')
+    }
+  });
+  
+  const upload = multer({ storage: storage })
+  
+  router.post("/image", checkAuth, upload.single('file'), (req, res, next) => {
+    const file = req.file;
+    //console.log(file.filename);
+    if (!file) {
+      const error = new Error('No File')
+      error.httpStatusCode = 400
+      return next(error)
+    }
+    res.send(file);
+  });
+  
 
 module.exports = router;

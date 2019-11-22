@@ -16,9 +16,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
   user:string
   constructor(public router: Router, private authService:AuthService) {}
   ngOnInit(){
+    this.userId=this.authService.getUserId();
+    this.username=this.authService.getUsername();
+      if(this.username){
+      this.user=this.username.split('@')[0].toUpperCase();
+      }
+    //  console.log("header user: "+this.userId+" "+this.username)
     
-  
-
     this.userIsAuthenticated=this.authService.getIsAuth();
     this.authListenerSubs=this.authService.getAuthStatusListener().subscribe(isAuthenticated=>{
       this.userIsAuthenticated=isAuthenticated;
@@ -28,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
       if(this.username){
       this.user=this.username.split('@')[0].toUpperCase();
       }
-      console.log("user: "+this.userId+" "+this.username)
+    //  console.log("header user: "+this.userId+" "+this.username)
     })
   }
   ngOnDestroy(){

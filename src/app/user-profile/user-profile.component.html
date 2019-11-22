@@ -1,0 +1,24 @@
+<div class="container">
+    <mat-card>
+        <form>
+
+            <img class="image" style="margin-top:2px ;" mat-card-image [src]="imagepath">
+            <br>
+            <mat-form-field>
+                <input matInput [ngModel]="username" type="text" name="email" placeholder="Email Id" #email="ngModel">
+            </mat-form-field>
+
+            <br>
+            <mat-form-field>
+                <input matInput [ngModel]="rosters" type="text" name="club" placeholder="Club Membership" #club="ngModel">
+            </mat-form-field>
+            <br>
+            <input type="file" name="image" (change)="selectImage($event)" />
+
+            <br>
+            <br>
+
+            <button color="primary" mat-raised-button type="submit" (click)="onSubmit()">Upload</button>
+        </form>
+    </mat-card>
+</div>

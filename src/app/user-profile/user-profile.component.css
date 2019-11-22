@@ -1,0 +1,51 @@
+mat-form-field,
+textarea {
+  width: 100%;
+}
+.container{
+  margin-left: 200px;
+  background-color:thistle;
+  margin-top: 20px;
+  padding-top:15px;
+  padding-bottom: 15px;
+ 
+}
+
+.member{
+  margin-left: 200px;
+  margin-right: 180px;
+  background-color:rgb(146, 81, 146);
+  margin-top: 20px;
+  padding-top:15px;
+  padding-bottom: 15px;
+
+  
+}
+
+.addOrgButton{
+  background-color: rgb(35, 207, 72);
+  color: aliceblue;
+
+  }
+  .button{
+    background-color: green;
+    color: aliceblue;
+    margin-left:15px;
+    margin-top: 10px;
+  }
+.warnButton{
+  margin-left:10px ;
+}
+::ng-deep .snackbar{
+  background:rgb(139, 31, 130);
+  text-align: center;
+  color: rgb(255, 254, 254);
+  font-size: 20px;
+ 
+}
+.image{
+ 
+  width:200px;
+  height:180px;
+  margin-left: 0.1px;
+}
