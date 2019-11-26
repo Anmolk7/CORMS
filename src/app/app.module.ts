@@ -11,9 +11,11 @@ import {
   MatButtonModule,
   MatToolbarModule,
   MatExpansionModule,
-  MatDialogModule,
+  MatDialogModule
 } from "@angular/material";
+import {MatListModule} from '@angular/material/list';
 
+import {MatDividerModule} from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from "./app.component";
 import { PostCreateComponent, PizzaPartyComponent } from "./posts/post-create/post-create.component";
@@ -64,7 +66,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AppRoutingModule,
     MatIconModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatListModule,
+    MatDialogModule,
+    MatDividerModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
               { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }], //angular will look for http_interceptors which we point to the AuthInterceptor

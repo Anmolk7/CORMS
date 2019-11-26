@@ -96,7 +96,7 @@ export class AuthService {
             this.isAuthenticated = true;
             this.userId=authInformation.userId;
             this.username=authInformation.username;
-            console.log("UserID: "+this.userId)
+          //  console.log("UserID: "+this.userId)
             this.setAuthTime(expiresIn / 1000);
             this.authStatusListener.next(true);
         }

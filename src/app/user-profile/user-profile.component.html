@@ -2,23 +2,39 @@
     <mat-card>
         <form>
 
-            <img class="image" style="margin-top:2px ;" mat-card-image [src]="imagepath">
+            <img class="image" style="margin-top:2px; margin-left:20px ;" mat-card-image [src]="imagepath">
             <br>
-            <mat-form-field>
+            <button style="margin-left:20px;  background-color: rgb(178, 212, 145);" mat-raised-button
+                (click)="filePicker.click()">Choose Image</button>
+            <input type="file" name="image" style="margin-left:20px ;" (change)="selectImage($event)" #filePicker />
+            <br>
+            <br>
+            <button color="primary" style="margin-left:20px ;" mat-raised-button type="submit"
+                (click)="onSubmit()">Upload</button>
+            <br>
+            <br>
+
+            <mat-form-field style="margin-left:20px ; width: 200px;">
                 <input matInput [ngModel]="username" type="text" name="email" placeholder="Email Id" #email="ngModel">
             </mat-form-field>
+            <mat-list>
+                <mat-list-item>Club Memberships</mat-list-item>
+            </mat-list>
+            <mat-accordion multi="true" *ngFor="let club of clubs " title="Club Membership">
+                <mat-expansion-panel style=" background-color:thistle;">
+                    <mat-expansion-panel-header style=" color:black; font-weight: bold ;">
+                        {{club?.organization}}
+                    </mat-expansion-panel-header>
+                    <mat-action-row>
+                        <button mat-button
+                            style=" background-color: rgb(182, 22, 22);  color: whitesmoke;">Unsubscribe</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
 
-            <br>
-            <mat-form-field>
-                <input matInput [ngModel]="rosters" type="text" name="club" placeholder="Club Membership" #club="ngModel">
-            </mat-form-field>
-            <br>
-            <input type="file" name="image" (change)="selectImage($event)" />
+            </mat-accordion>
 
-            <br>
-            <br>
 
-            <button color="primary" mat-raised-button type="submit" (click)="onSubmit()">Upload</button>
+
         </form>
     </mat-card>
 </div>

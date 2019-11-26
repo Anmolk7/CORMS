@@ -4,6 +4,7 @@ import { AuthService } from '../auth/auth.service';
 import { Roster } from '../posts/roster.model';
 import { Subscription } from 'rxjs';
 import { PostService } from '../service/post.service';
+// const fs = require("fs");
 
 @Component({
   selector: 'app-user-profile',
@@ -18,20 +19,27 @@ export class UserProfileComponent implements OnInit {
   imagepath;
   username;
   rosters: Roster[];
-  private rosterSub: Subscription;
-  
-  constructor(private http: HttpClient, public authService: AuthService, public postService:PostService){}
+  rosterSub: Subscription;
+  clubs: Roster[];
 
-  ngOnInit(){
-    this.imagepath="../../assets/image/"+this.authService.getUserId()+'.'+'jpeg'
-    this.username=this.authService.getUsername();
 
-    this.rosterSub= this.postService.getRosterUpdateListener()
-    .subscribe((rosters:Roster[])=>{
-      this.rosters=rosters;
-      console.log("Rosters: "+JSON.stringify(this.rosters));
-    });
-    //console.log(this.imagepath);
+  constructor(private http: HttpClient, public authService: AuthService, public postService: PostService) { }
+
+  ngOnInit() {
+    // const path = "../../assets/image/" + this.authService.getUserId() + '.' + 'jpeg';
+    // if (fs.existsSync(path)) {
+      this.imagepath = "../../assets/image/" + this.authService.getUserId() + '.' + 'jpeg'
+    //}
+    console.log(this.imagepath);
+    this.username = this.authService.getUsername();
+    this.postService.getMembers();
+    this.rosterSub = this.postService.getRosterUpdateListener()
+      .subscribe((rosters: Roster[]) => {
+        this.rosters = rosters;
+        this.clubs = this.rosters.filter(roster => roster.username === this.username);
+        console.log(this.clubs);
+      });
+
   }
 
   selectImage(event) {
@@ -42,7 +50,7 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  onSubmit(){
+  onSubmit() {
     const formData = new FormData();
     formData.append('file', this.images);
     this.http.post<any>("http://localhost:3000/api/user/image", formData).subscribe(

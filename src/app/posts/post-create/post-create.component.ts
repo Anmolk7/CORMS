@@ -51,7 +51,7 @@ export class PostCreateComponent implements OnInit {
     this.rosterSub= this.postService.getRosterUpdateListener()
     .subscribe((rosters:Roster[])=>{
       this.rosters=rosters;
-      console.log("Rosters: "+JSON.stringify(this.rosters));
+     // console.log("Rosters: "+JSON.stringify(this.rosters));
     });
    
     this.userIsAuthenticated=this.authService.getIsAuth();

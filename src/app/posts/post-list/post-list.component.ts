@@ -12,6 +12,7 @@ import { MatButton } from '@angular/material';
   templateUrl: "./post-list.component.html",
   styleUrls: ["./post-list.component.css"]
 })
+
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   rosters: Roster[];
@@ -34,7 +35,6 @@ export class PostListComponent implements OnInit, OnDestroy {
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userId = this.authService.getUserId();
-    console.log("userId: " + this.userId)
 
     this.authStatus = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
@@ -47,7 +47,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onJoin(organization: string, joinButton: MatButton) {
     console.log(joinButton._elementRef.nativeElement);
-    
+
     this.postService.getAllMembers().subscribe(roster => {
       this.rosters = roster
       this.duplicateRoster = this.rosters.find((e: Roster) => e.username === this.username && e.organization === organization)
