@@ -1336,7 +1336,7 @@ let PostService = class PostService {
     getPosts() {
         //return [...this.posts];
         this.http
-            .get("http://localhost:3000/api/posts")
+            .get("http://localhost:8080/api/posts")
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(postData => {
             //return id as _id
             return postData.posts.map(post => {
@@ -1356,7 +1356,7 @@ let PostService = class PostService {
     }
     getMembers() {
         this.http
-            .get("http://localhost:3000/api/join")
+            .get("http://localhost:8080/api/join")
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(memberData => {
             //return id as _id
             return memberData.rosters.map(roster => {
@@ -1379,7 +1379,7 @@ let PostService = class PostService {
     }
     getAllMembers() {
         return this.http
-            .get("http://localhost:3000/api/join")
+            .get("http://localhost:8080/api/join")
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(memberData => {
             //return id as _id
             return memberData.rosters.map(roster => {
@@ -1391,7 +1391,7 @@ let PostService = class PostService {
         }));
     }
     getPost(id) {
-        return this.http.get("http://localhost:3000/api/posts/" + id);
+        return this.http.get("http://localhost:8080/api/posts/" + id);
     }
     joinOrg(username, organization) {
         const roster = {
@@ -1399,7 +1399,7 @@ let PostService = class PostService {
             username: username,
             organization: organization
         };
-        this.http.post("http://localhost:3000/api/join", roster).subscribe(responseData => {
+        this.http.post("http://localhost:8080/api/join", roster).subscribe(responseData => {
             console.log("response Data " + responseData.message + JSON.stringify(roster));
             this.roster.push(roster);
             this.rosterUpdated.next([...this.roster]);
@@ -1414,7 +1414,7 @@ let PostService = class PostService {
             creator: null
         };
         this.http
-            .post("http://localhost:3000/api/posts", post)
+            .post("http://localhost:8080/api/posts", post)
             .subscribe(responseData => {
             console.log("response Data " + responseData.message + JSON.stringify(post));
             this.posts.push(post);
@@ -1426,7 +1426,7 @@ let PostService = class PostService {
     }
     deletePost(postId) {
         this.http
-            .delete("http://localhost:3000/api/posts/" + postId)
+            .delete("http://localhost:8080/api/posts/" + postId)
             .subscribe(() => {
             console.log("Deleted!");
             const updatedPosts = this.posts.filter(post => post.id !== postId);
@@ -1443,7 +1443,7 @@ let PostService = class PostService {
             creator: null
         };
         this.http
-            .put("http://localhost:3000/api/posts/" + post.id, post)
+            .put("http://localhost:8080/api/posts/" + post.id, post)
             .subscribe(response => {
             const updatedPosts = [...this.posts];
             const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);

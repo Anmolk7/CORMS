@@ -1264,7 +1264,7 @@
                     var _this = this;
                     //return [...this.posts];
                     this.http
-                        .get("http://localhost:3000/api/posts")
+                        .get("http://localhost:8080/api/posts")
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (postData) {
                         //return id as _id
                         return postData.posts.map(function (post) {
@@ -1285,7 +1285,7 @@
                 PostService.prototype.getMembers = function () {
                     var _this = this;
                     this.http
-                        .get("http://localhost:3000/api/join")
+                        .get("http://localhost:8080/api/join")
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (memberData) {
                         //return id as _id
                         return memberData.rosters.map(function (roster) {
@@ -1308,7 +1308,7 @@
                 };
                 PostService.prototype.getAllMembers = function () {
                     return this.http
-                        .get("http://localhost:3000/api/join")
+                        .get("http://localhost:8080/api/join")
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (memberData) {
                         //return id as _id
                         return memberData.rosters.map(function (roster) {
@@ -1320,7 +1320,7 @@
                     }));
                 };
                 PostService.prototype.getPost = function (id) {
-                    return this.http.get("http://localhost:3000/api/posts/" + id);
+                    return this.http.get("http://localhost:8080/api/posts/" + id);
                 };
                 PostService.prototype.joinOrg = function (username, organization) {
                     var _this = this;
@@ -1329,7 +1329,7 @@
                         username: username,
                         organization: organization
                     };
-                    this.http.post("http://localhost:3000/api/join", roster).subscribe(function (responseData) {
+                    this.http.post("http://localhost:8080/api/join", roster).subscribe(function (responseData) {
                         console.log("response Data " + responseData.message + JSON.stringify(roster));
                         _this.roster.push(roster);
                         _this.rosterUpdated.next(_this.roster.slice());
@@ -1345,7 +1345,7 @@
                         creator: null
                     };
                     this.http
-                        .post("http://localhost:3000/api/posts", post)
+                        .post("http://localhost:8080/api/posts", post)
                         .subscribe(function (responseData) {
                         console.log("response Data " + responseData.message + JSON.stringify(post));
                         _this.posts.push(post);
@@ -1358,7 +1358,7 @@
                 PostService.prototype.deletePost = function (postId) {
                     var _this = this;
                     this.http
-                        .delete("http://localhost:3000/api/posts/" + postId)
+                        .delete("http://localhost:8080/api/posts/" + postId)
                         .subscribe(function () {
                         console.log("Deleted!");
                         var updatedPosts = _this.posts.filter(function (post) { return post.id !== postId; });
@@ -1376,7 +1376,7 @@
                         creator: null
                     };
                     this.http
-                        .put("http://localhost:3000/api/posts/" + post.id, post)
+                        .put("http://localhost:8080/api/posts/" + post.id, post)
                         .subscribe(function (response) {
                         var updatedPosts = _this.posts.slice();
                         var oldPostIndex = updatedPosts.findIndex(function (p) { return p.id === post.id; });
