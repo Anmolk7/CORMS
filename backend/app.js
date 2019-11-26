@@ -6,6 +6,7 @@ const Post = require("./model/post");
 const postRoutes=require("./routes/postRoutes")
 const userRoutes=require("./routes/userRoutes")
 const rosterRoutes=require("./routes/rosterRoutes")
+const path=require("path");
 
 
 mongoose
@@ -21,6 +22,8 @@ mongoose
 
 app.use(bodyParser.json()); //extracts the incoming request and converts the stream of data in request and adds it to the post request object.
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use("/",express.static(path.join(__dirname,"CORMS")));
 
 //CORS
 app.use((req, res, next) => {
@@ -40,4 +43,7 @@ app.use((req, res, next) => {
 app.use("/api/posts",postRoutes)
 app.use("/api/user/",userRoutes)
 app.use("/api/join", rosterRoutes)
+app.use((req,res,next)=>{
+  res.sendFile(path.join(__dirname,"CORMS","index.html"))
+})
 module.exports=app
