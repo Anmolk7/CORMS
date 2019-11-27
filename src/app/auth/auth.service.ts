@@ -4,6 +4,9 @@ import { AuthData } from './auth-data.model';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
+const DEV_PATH="http://localhost:3000";
+const PROD_PATH="https://corms-260220.appspot.com";
+
 @Injectable({ providedIn: "root" })
 export class AuthService {
     private isAuthenticated = false;
@@ -37,7 +40,7 @@ export class AuthService {
 
     createUser(email: string, password: string) {
         const authData: AuthData = { email: email, password: password };
-        this.http.post("https://corms-260220.appspot.com/api/user/signup", authData).subscribe(() => {
+        this.http.post(DEV_PATH+"/api/user/signup", authData).subscribe(() => {
             this.router.navigate(['/']); 
         },error=>{
             this.authStatusListener.next(false);
@@ -48,7 +51,7 @@ export class AuthService {
     }
     login(email: string, password: string) {
         const authData: AuthData = { email: email, password: password };
-        this.http.post<{ token: string, expiresIn: number,userId:string, username:string }>("https://corms-260220.appspot.com/api/user/login", authData).subscribe(response => {
+        this.http.post<{ token: string, expiresIn: number,userId:string, username:string }>(DEV_PATH+"/api/user/login", authData).subscribe(response => {
             const token = response.token;
             this.token = token;
  

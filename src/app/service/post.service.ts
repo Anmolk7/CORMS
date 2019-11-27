@@ -4,6 +4,8 @@ import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Roster } from '../posts/roster.model';
+const DEV_PATH="http://localhost:3000";
+const PROD_PATH="https://corms-260220.appspot.com";
 
 @Injectable({ providedIn: "root" }) //uses same instance where ever it is injected
 export class PostService {
@@ -12,11 +14,12 @@ export class PostService {
   private postUpdated = new Subject<Post[]>();
   private rosterUpdated = new Subject<Roster[]>();
   constructor(private http: HttpClient) {}
+ 
 
   getPosts() {
     //return [...this.posts];
     this.http
-      .get<{ message: string; posts: any }>("https://corms-260220.appspot.com/api/posts")
+      .get<{ message: string; posts: any }>(DEV_PATH+"/api/posts")
       .pipe(
         map(postData => {
           //return id as _id
@@ -38,7 +41,7 @@ export class PostService {
   }
   getMembers(){
     this.http
-    .get<{ message: string; rosters: any }>("https://corms-260220.appspot.com/api/join")
+    .get<{ message: string; rosters: any }>(DEV_PATH+"/api/join")
     .pipe(
       map(memberData => {
         //return id as _id
@@ -65,7 +68,7 @@ export class PostService {
 
   getAllMembers(){
     return this.http
-    .get<{rosters: any }>("https://corms-260220.appspot.com/api/join")
+    .get<{rosters: any }>(DEV_PATH+"/api/join")
     .pipe(
       map(memberData => {
         //return id as _id
@@ -81,7 +84,7 @@ export class PostService {
   }
 
   getPost(id:string){
-    return this.http.get<{_id:string, name:string, description:string, picture:string, creator:string}>("https://corms-260220.appspot.com/api/posts/"+id);
+    return this.http.get<{_id:string, name:string, description:string, picture:string, creator:string}>(DEV_PATH+"/api/posts/"+id);
   }
   joinOrg(username:string, organization:string){
     const roster: Roster={
@@ -89,7 +92,7 @@ export class PostService {
       username:username,
       organization:organization
     }
-    this.http.post<{message:string}>("https://corms-260220.appspot.com/api/join",roster)  .subscribe(responseData => {
+    this.http.post<{message:string}>(DEV_PATH+"api/join",roster)  .subscribe(responseData => {
       console.log(
         "response Data " + responseData.message + JSON.stringify(roster)
       );
@@ -107,7 +110,7 @@ export class PostService {
       creator:null
     };
     this.http
-      .post<{ message: string }>("https://corms-260220.appspot.com/api/posts", post)
+      .post<{ message: string }>(DEV_PATH+"/api/posts", post)
       .subscribe(responseData => {
         console.log(
           "response Data " + responseData.message + JSON.stringify(post)
@@ -122,7 +125,7 @@ export class PostService {
   }
   deletePost(postId: string) {
     this.http
-      .delete("https://corms-260220.appspot.com/api/posts/" + postId)
+      .delete(DEV_PATH+"/api/posts/" + postId)
       .subscribe(() => {
         console.log("Deleted!");
         const updatedPosts = this.posts.filter(post => post.id !== postId);
@@ -139,7 +142,7 @@ export class PostService {
       creator:null
     };
     this.http
-      .put("https://corms-260220.appspot.com/api/posts/" + post.id, post)
+      .put(DEV_PATH+"/api/posts/" + post.id, post)
       .subscribe(response => {
         const updatedPosts=[...this.posts];
         const oldPostIndex=updatedPosts.findIndex(p=>p.id===post.id);

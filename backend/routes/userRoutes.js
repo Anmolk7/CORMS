@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const checkAuth = require("../middleware/check-auth");
+const ImagePath= "../../../../CORMS/CORMS/backend/CORMS/assets/image";
 
 var userId;
 var date= new Date;
@@ -71,7 +72,7 @@ router.post("/login", (req, res, next) => {
 const storage = multer.diskStorage({
     
     destination: (req, file, callBack) => {
-      callBack(null, '../../../CORMS/CORMS/src/assets/image')
+      callBack(null, ImagePath)
     },
     filename: (req, file, callBack) => {  
       //callBack(null, `image_${file.originalname}`)

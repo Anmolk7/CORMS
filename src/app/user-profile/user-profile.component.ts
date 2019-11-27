@@ -5,6 +5,10 @@ import { Roster } from '../posts/roster.model';
 import { Subscription } from 'rxjs';
 import { PostService } from '../service/post.service';
 // const fs = require("fs");
+const DEV_PATH="http://localhost:3000";
+const PROD_PATH="https://corms-260220.appspot.com";
+const IMAGE_PATH="";
+
 
 @Component({
   selector: 'app-user-profile',
@@ -28,7 +32,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     // const path = "../../assets/image/" + this.authService.getUserId() + '.' + 'jpeg';
     // if (fs.existsSync(path)) {
-      this.imagepath = "../../assets/image/" + this.authService.getUserId() + '.' + 'jpeg'
+      this.imagepath = "./../../../CORMS/CORMS/backend/CORMS/assets/image/" + this.authService.getUserId() + '.' + 'jpeg'
     //}
     console.log(this.imagepath);
     this.username = this.authService.getUsername();
@@ -53,7 +57,7 @@ export class UserProfileComponent implements OnInit {
   onSubmit() {
     const formData = new FormData();
     formData.append('file', this.images);
-    this.http.post<any>("http://localhost:3000/api/user/image", formData).subscribe(
+    this.http.post<any>(DEV_PATH+"/api/user/image", formData).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );
