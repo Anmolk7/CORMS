@@ -92,7 +92,7 @@ export class PostService {
       username:username,
       organization:organization
     }
-    this.http.post<{message:string}>(DEV_PATH+"api/join",roster)  .subscribe(responseData => {
+    this.http.post<{message:string}>(DEV_PATH+"/api/join",roster)  .subscribe(responseData => {
       console.log(
         "response Data " + responseData.message + JSON.stringify(roster)
       );
