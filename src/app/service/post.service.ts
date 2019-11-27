@@ -16,7 +16,7 @@ export class PostService {
   getPosts() {
     //return [...this.posts];
     this.http
-      .get<{ message: string; posts: any }>("http://localhost:8080/api/posts")
+      .get<{ message: string; posts: any }>("https://corms-260220.appspot.com/api/posts")
       .pipe(
         map(postData => {
           //return id as _id
@@ -38,7 +38,7 @@ export class PostService {
   }
   getMembers(){
     this.http
-    .get<{ message: string; rosters: any }>("http://localhost:8080/api/join")
+    .get<{ message: string; rosters: any }>("https://corms-260220.appspot.com/api/join")
     .pipe(
       map(memberData => {
         //return id as _id
@@ -65,7 +65,7 @@ export class PostService {
 
   getAllMembers(){
     return this.http
-    .get<{rosters: any }>("http://localhost:8080/api/join")
+    .get<{rosters: any }>("https://corms-260220.appspot.com/api/join")
     .pipe(
       map(memberData => {
         //return id as _id
@@ -81,7 +81,7 @@ export class PostService {
   }
 
   getPost(id:string){
-    return this.http.get<{_id:string, name:string, description:string, picture:string, creator:string}>("http://localhost:8080/api/posts/"+id);
+    return this.http.get<{_id:string, name:string, description:string, picture:string, creator:string}>("https://corms-260220.appspot.com/api/posts/"+id);
   }
   joinOrg(username:string, organization:string){
     const roster: Roster={
@@ -89,7 +89,7 @@ export class PostService {
       username:username,
       organization:organization
     }
-    this.http.post<{message:string}>("http://localhost:8080/api/join",roster)  .subscribe(responseData => {
+    this.http.post<{message:string}>("https://corms-260220.appspot.com/api/join",roster)  .subscribe(responseData => {
       console.log(
         "response Data " + responseData.message + JSON.stringify(roster)
       );
@@ -107,7 +107,7 @@ export class PostService {
       creator:null
     };
     this.http
-      .post<{ message: string }>("http://localhost:8080/api/posts", post)
+      .post<{ message: string }>("https://corms-260220.appspot.com/api/posts", post)
       .subscribe(responseData => {
         console.log(
           "response Data " + responseData.message + JSON.stringify(post)
@@ -122,7 +122,7 @@ export class PostService {
   }
   deletePost(postId: string) {
     this.http
-      .delete("http://localhost:8080/api/posts/" + postId)
+      .delete("https://corms-260220.appspot.com/api/posts/" + postId)
       .subscribe(() => {
         console.log("Deleted!");
         const updatedPosts = this.posts.filter(post => post.id !== postId);
@@ -139,7 +139,7 @@ export class PostService {
       creator:null
     };
     this.http
-      .put("http://localhost:8080/api/posts/" + post.id, post)
+      .put("https://corms-260220.appspot.com/api/posts/" + post.id, post)
       .subscribe(response => {
         const updatedPosts=[...this.posts];
         const oldPostIndex=updatedPosts.findIndex(p=>p.id===post.id);
