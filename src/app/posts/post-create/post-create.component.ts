@@ -17,7 +17,7 @@ import { Roster } from '../roster.model';
 export class PostCreateComponent implements OnInit {
   private mode = "create";
   private postId: string;
-  post: Post;
+  post: Post={id:null, name:"name", description:"des",picture:"pic", creator:"creator"};
   duration=2;
   private authStatus: Subscription;
   private rosterSub: Subscription;
@@ -51,7 +51,7 @@ export class PostCreateComponent implements OnInit {
     this.rosterSub= this.postService.getRosterUpdateListener()
     .subscribe((rosters:Roster[])=>{
       this.rosters=rosters;
-     // console.log("Rosters: "+JSON.stringify(this.rosters));
+     console.log("Rosters: "+JSON.stringify(this.rosters));
     });
    
     this.userIsAuthenticated=this.authService.getIsAuth();
@@ -64,7 +64,6 @@ export class PostCreateComponent implements OnInit {
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
-   
       return;
     }
     // snackbar pop-up 

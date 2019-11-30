@@ -22,10 +22,17 @@ export class PostListComponent implements OnInit, OnDestroy {
   userId: string;
   username: string;
   duplicateRoster: Roster;
+  requestCount:number=0;
+  rosterLength:number=0;
  
   ngOnInit() {
     this.postService.getPosts();
-    console.log(this.rosters);
+    this.postService.getAllMembers().subscribe(rosters=>{
+      this.rosters=rosters;
+      this.rosterLength=this.rosters.length;
+      console.log(this.rosters);
+    })
+  
     this.userId = this.authService.getUserId();
     this.username = this.authService.getUsername();
     this.postsSub = this.postService
@@ -56,6 +63,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         alert('You have already sent a request to join ' + organization + " club")
       }
       else {
+      //  console.log(this.username);
         alert('Request sent to join ' + organization + " club")
         this.postService.joinOrg(this.username, organization)
       }
