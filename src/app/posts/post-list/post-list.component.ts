@@ -16,6 +16,7 @@ import { MatButton } from '@angular/material';
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   rosters: Roster[];
+  rostersPopup: Roster[];
   private postsSub: Subscription;
   private authStatus: Subscription;
   userIsAuthenticated = false;
@@ -24,14 +25,22 @@ export class PostListComponent implements OnInit, OnDestroy {
   duplicateRoster: Roster;
   requestCount:number=0;
   rosterLength:number=0;
+  popup:boolean=false;
+
+  popUp(org:string, event){
+    console.log(event);
+  //  console.log(org);
+    this.popup=true;
+    this.postService.getAllMembers().subscribe(rosters=>{
+      this.rostersPopup=rosters.filter(rosters=> rosters.organization===org)
+      this.rosterLength=this.rostersPopup.length;
+     // console.log(this.rostersPopup);
+    })
+  }
  
   ngOnInit() {
     this.postService.getPosts();
-    this.postService.getAllMembers().subscribe(rosters=>{
-      this.rosters=rosters;
-      this.rosterLength=this.rosters.length;
-      console.log(this.rosters);
-    })
+  //  this.popUp();
   
     this.userId = this.authService.getUserId();
     this.username = this.authService.getUsername();
@@ -53,12 +62,13 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
   onJoin(organization: string, joinButton: MatButton) {
-    console.log(joinButton._elementRef.nativeElement);
+   // console.log(joinButton._elementRef.nativeElement);
+
 
     this.postService.getAllMembers().subscribe(roster => {
       this.rosters = roster
       this.duplicateRoster = this.rosters.find((e: Roster) => e.username === this.username && e.organization === organization)
-      console.log(this.duplicateRoster);
+    //  console.log(this.duplicateRoster);
       if (this.duplicateRoster) {
         alert('You have already sent a request to join ' + organization + " club")
       }

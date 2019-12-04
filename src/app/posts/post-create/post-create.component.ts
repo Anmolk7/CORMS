@@ -17,12 +17,12 @@ import { Roster } from '../roster.model';
 export class PostCreateComponent implements OnInit {
   private mode = "create";
   private postId: string;
-  post: Post={id:null, name:"name", description:"des",picture:"pic", creator:"creator"};
-  duration=2;
+  post: Post = { id: null, name: "name", description: "des", picture: "pic", creator: "creator" };
+  duration = 2;
   private authStatus: Subscription;
   private rosterSub: Subscription;
-  rosters: Roster[]=[];
-  userIsAuthenticated=false;
+  rosters: Roster[] = [];
+  userIsAuthenticated = false;
   currentMembers: Roster[];
   requestingMembers: Roster[];
   constructor(
@@ -31,7 +31,7 @@ export class PostCreateComponent implements OnInit {
     public router: Router,
     public snackBar: MatSnackBar,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.activeRoute.paramMap.subscribe((paramMap: ParamMap) => {
@@ -39,8 +39,8 @@ export class PostCreateComponent implements OnInit {
         //extract postId from current URL
         this.mode = "edit";
         this.postId = paramMap.get("postId");
-        this.postService.getPost(this.postId).subscribe(postData=>{
-            this.post={id:postData._id, name:postData.name, description:postData.description, picture:postData.picture, creator:postData.creator }
+        this.postService.getPost(this.postId).subscribe(postData => {
+          this.post = { id: postData._id, name: postData.name, description: postData.description, picture: postData.picture, creator: postData.creator }
         });
       } else {
         this.mode = "create";
@@ -48,19 +48,19 @@ export class PostCreateComponent implements OnInit {
       }
     });
     this.postService.getMembers();
-    this.rosterSub= this.postService.getRosterUpdateListener()
-    .subscribe((rosters:Roster[])=>{
-      this.rosters=rosters;
-     console.log("Rosters: "+JSON.stringify(this.rosters));
-    });
-   
-    this.userIsAuthenticated=this.authService.getIsAuth();
-    console.log("Authenticated ?"+this.userIsAuthenticated)
+    this.rosterSub = this.postService.getRosterUpdateListener()
+      .subscribe((rosters: Roster[]) => {
+        this.rosters = rosters;
+        console.log("Rosters: " + JSON.stringify(this.rosters));
+      });
 
-    this.authStatus=this.authService.getAuthStatusListener().subscribe(isAuthenticated=>{
-      this.userIsAuthenticated=isAuthenticated
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    console.log("Authenticated ?" + this.userIsAuthenticated)
+
+    this.authStatus = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated
     })
-    console.log("Authenticated ?"+this.userIsAuthenticated)
+    console.log("Authenticated ?" + this.userIsAuthenticated)
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
@@ -96,5 +96,5 @@ export class PostCreateComponent implements OnInit {
   styleUrls: ["./post-create.component.css"]
 })
 export class PizzaPartyComponent {
-  constructor(public router:Router){}
+  constructor(public router: Router) { }
 }
