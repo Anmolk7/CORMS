@@ -3,10 +3,13 @@ const bodyParser = require("body-parser");
 const app = express(); //big chain of middleware we apply to incoming requests. Like a big funnel where each part of the funnel that can do something with the request
 const mongoose = require("mongoose");
 const Post = require("./model/post");
-const postRoutes=require("./routes/postRoutes")
-const userRoutes=require("./routes/userRoutes")
-const rosterRoutes=require("./routes/rosterRoutes")
+const postRoutes=require("./routes/postRoutes");
+const userRoutes=require("./routes/userRoutes");
+const rosterRoutes=require("./routes/rosterRoutes");
+const presidentRoutes=require("./routes/presidentRoutes");
+const currMemRoutes=require("./routes/currMemRoutes");
 const path=require("path");
+
 
 
 mongoose
@@ -43,6 +46,8 @@ app.use((req, res, next) => {
 app.use("/api/posts",postRoutes)
 app.use("/api/user/",userRoutes)
 app.use("/api/join", rosterRoutes)
+app.use("/api/makepres",presidentRoutes)
+app.use("/api/addmember",currMemRoutes)
 app.use((req,res,next)=>{
   res.sendFile(path.join(__dirname,"CORMS","index.html"))
 })

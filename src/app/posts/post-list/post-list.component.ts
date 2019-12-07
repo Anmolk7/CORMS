@@ -28,7 +28,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   popup:boolean=false;
 
   popUp(org:string, event){
-    console.log(event);
+   // console.log(event);
   //  console.log(org);
     this.popup=true;
     this.postService.getAllMembers().subscribe(rosters=>{

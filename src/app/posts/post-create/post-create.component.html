@@ -28,13 +28,18 @@
 
 <div *ngIf="router.url!='/orgcreate'" class="member">
   <p style="text-align: center; font-size: 20px; color: whitesmoke; height: 35px;"> Current Members </p>
-  <mat-accordion multi="true">
+  
+  <mat-accordion multi="true"  *ngFor="let current of currentMembers ">
     <mat-expansion-panel style=" background-color:thistle;">
       <mat-expansion-panel-header style="color: black; font-weight: bold ;">
-
+        {{current.username}}
       </mat-expansion-panel-header>
       <mat-action-row>
-        <button mat-button style="color: whitesmoke; background-color: rgb(233, 61, 31);">DELETE</button>
+        <button mat-button style="color: whitesmoke; background-color: rgb(233, 61, 31);" (click)="deletePresidents(current.username)">DELETE</button>
+        <button mat-button style="color: whitesmoke; background-color: rgb(225, 238, 51); color: black;"
+        (click)="makePresident(current.username,post?.name)"
+        >MAKE PRESIDENT</button>
+        
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
@@ -47,9 +52,9 @@
         {{roster?.username}}
       </mat-expansion-panel-header>
       <mat-action-row>
-        <button mat-button style=" background-color: rgb(35, 207, 72);  color: whitesmoke;">ADD</button>
+        <button mat-button style=" background-color: rgb(35, 207, 72);  color: whitesmoke;"
+        (click)="addMember(roster?.username,post?.name)">ADD</button>
       </mat-action-row>
     </mat-expansion-panel>
-
   </mat-accordion>
 </div>

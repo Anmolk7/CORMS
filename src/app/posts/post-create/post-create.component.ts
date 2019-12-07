@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Roster } from '../roster.model';
+import { President } from '../president.model';
+import { CurrMem } from '../currMem.model';
 
 
 @Component({
@@ -21,10 +23,14 @@ export class PostCreateComponent implements OnInit {
   duration = 2;
   private authStatus: Subscription;
   private rosterSub: Subscription;
+  private currMemSub: Subscription;
   rosters: Roster[] = [];
+  presidents: President[] = [];
+  username: string = "";
   userIsAuthenticated = false;
-  currentMembers: Roster[];
+  currentMembers: CurrMem[] = []; 
   requestingMembers: Roster[];
+  duplicatePresident: President;
   constructor(
     public postService: PostService,
     public activeRoute: ActivatedRoute,
@@ -33,7 +39,9 @@ export class PostCreateComponent implements OnInit {
     public authService: AuthService
   ) { }
 
+
   ngOnInit() {
+    this.username = this.authService.getUsername();
     this.activeRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
         //extract postId from current URL
@@ -47,20 +55,27 @@ export class PostCreateComponent implements OnInit {
         this.postId = null;
       }
     });
+
+    this.postService.getCurrentMembers();
+    this.currMemSub=this.postService.getCurrentMemberListener().subscribe((currMem:CurrMem[])=>{
+      this.currentMembers=currMem;
+      console.log(this.currentMembers);
+    });
+
     this.postService.getMembers();
     this.rosterSub = this.postService.getRosterUpdateListener()
       .subscribe((rosters: Roster[]) => {
         this.rosters = rosters;
-        console.log("Rosters: " + JSON.stringify(this.rosters));
+       /// console.log("Rosters: " + JSON.stringify(this.rosters));
       });
 
     this.userIsAuthenticated = this.authService.getIsAuth();
-    console.log("Authenticated ?" + this.userIsAuthenticated)
+   // console.log("Authenticated ?" + this.userIsAuthenticated)
 
     this.authStatus = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated
     })
-    console.log("Authenticated ?" + this.userIsAuthenticated)
+   // console.log("Authenticated ?" + this.userIsAuthenticated)
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
@@ -88,7 +103,35 @@ export class PostCreateComponent implements OnInit {
     }
     form.resetForm();
   }
+  addMember(username:string,organization:string){
+   // console.log(username+" "+organization);
+    this.postService.moveFromRequestToCurrent(username,organization);
+  }
+  makePresident(username: string, organization: string) {
+    this.postService.getAllPresidents().subscribe(president => {
+      this.presidents = president
+      this.duplicatePresident = this.presidents.find((e: President) => e.organization === organization)
+      // console.log(this.duplicatePresident);
+      if (this.duplicatePresident) {
+        //   alert('President for ' + organization + " club already exists!" )
+       // console.log("Updating President to " + username+" for "+organization);
+        this.postService.deletePresident(organization);
+        this.postService.makePresident(username, organization)
+      }
+      else {
+      //  console.log(this.username);
+       // alert('Request sent to join ' + organization + " club")
+       console.log("Creating President for " + organization);
+       this.postService.makePresident(username, organization)
+      }
+    });
+
+  }
+  deletePresidents(username: string) {
+    this.postService.deletePresident(username);
+  }
 }
+
 
 @Component({
   selector: 'app-post-create-pop',

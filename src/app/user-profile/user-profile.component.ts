@@ -25,6 +25,7 @@ export class UserProfileComponent implements OnInit {
   rosters: Roster[];
   rosterSub: Subscription;
   clubs: Roster[];
+  userId: string="";
 
 
   constructor(private http: HttpClient, public authService: AuthService, public postService: PostService) { }
@@ -36,6 +37,7 @@ export class UserProfileComponent implements OnInit {
     //}
     console.log(this.imagepath);
     this.username = this.authService.getUsername();
+    this.userId=this.authService.getUserId();
     this.postService.getMembers();
     this.rosterSub = this.postService.getRosterUpdateListener()
       .subscribe((rosters: Roster[]) => {

@@ -17,10 +17,12 @@
             <mat-form-field style="margin-left:20px ; width: 200px;">
                 <input matInput [ngModel]="username" type="text" name="email" placeholder="Email Id" #email="ngModel">
             </mat-form-field>
+
+            <div *ngIf="userId !='5dcdfbc72b62ec465537226f'">
             <mat-list>
                 <mat-list-item>Club Memberships</mat-list-item>
             </mat-list>
-            <mat-accordion multi="true" *ngFor="let club of clubs " title="Club Membership">
+            <mat-accordion multi="true" *ngFor="let club of clubs " title="Club Membership" >
                 <mat-expansion-panel style=" background-color:thistle;">
                     <mat-expansion-panel-header style=" color:black; font-weight: bold ;">
                         {{club?.organization}}
@@ -32,7 +34,7 @@
                 </mat-expansion-panel>
 
             </mat-accordion>
-
+        </div>
 
 
         </form>

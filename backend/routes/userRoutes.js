@@ -5,7 +5,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const checkAuth = require("../middleware/check-auth");
-const ImagePath= "../../../../CORMS/CORMS/backend/CORMS/assets/image";
+const ImagePath="../../../CORMS/src/assets/image";
+
+//../../assets/image/image_warhawks.png
 
 var userId;
 var date= new Date;
