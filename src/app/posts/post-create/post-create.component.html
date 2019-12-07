@@ -32,10 +32,11 @@
   <mat-accordion multi="true"  *ngFor="let current of currentMembers ">
     <mat-expansion-panel style=" background-color:thistle;">
       <mat-expansion-panel-header style="color: black; font-weight: bold ;">
+        <p *ngIf="current?.organization === presidents.organization">President </p>
         {{current.username}}
       </mat-expansion-panel-header>
       <mat-action-row>
-        <button mat-button style="color: whitesmoke; background-color: rgb(233, 61, 31);" (click)="deletePresidents(current.username)">DELETE</button>
+        <button mat-button style="color: whitesmoke; background-color: rgb(233, 61, 31);" (click)="removeCurrent(current.username)">DELETE</button>
         <button mat-button style="color: whitesmoke; background-color: rgb(225, 238, 51); color: black;"
         (click)="makePresident(current.username,post?.name)"
         >MAKE PRESIDENT</button>

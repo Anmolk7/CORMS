@@ -19,16 +19,17 @@ import { CurrMem } from '../currMem.model';
 export class PostCreateComponent implements OnInit {
   private mode = "create";
   private postId: string;
-  post: Post = { id: null, name: "name", description: "des", picture: "pic", creator: "creator" };
+  post: Post = { id: null, name: "", description: "", picture: "", creator: "" };
   duration = 2;
   private authStatus: Subscription;
   private rosterSub: Subscription;
   private currMemSub: Subscription;
   rosters: Roster[] = [];
+  currentPresident: President;
   presidents: President[] = [];
   username: string = "";
   userIsAuthenticated = false;
-  currentMembers: CurrMem[] = []; 
+  currentMembers: CurrMem[] = [];
   requestingMembers: Roster[];
   duplicatePresident: President;
   constructor(
@@ -42,6 +43,11 @@ export class PostCreateComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.authService.getUsername();
+    this.postService.getAllPresidents().subscribe(president => {
+      this.presidents = president
+      console.log("president "+JSON.stringify(this.presidents))
+    });
+    
     this.activeRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
         //extract postId from current URL
@@ -53,12 +59,13 @@ export class PostCreateComponent implements OnInit {
       } else {
         this.mode = "create";
         this.postId = null;
+      
       }
     });
 
     this.postService.getCurrentMembers();
-    this.currMemSub=this.postService.getCurrentMemberListener().subscribe((currMem:CurrMem[])=>{
-      this.currentMembers=currMem;
+    this.currMemSub = this.postService.getCurrentMemberListener().subscribe((currMem: CurrMem[]) => {
+      this.currentMembers = currMem;
       console.log(this.currentMembers);
     });
 
@@ -66,16 +73,16 @@ export class PostCreateComponent implements OnInit {
     this.rosterSub = this.postService.getRosterUpdateListener()
       .subscribe((rosters: Roster[]) => {
         this.rosters = rosters;
-       /// console.log("Rosters: " + JSON.stringify(this.rosters));
+        /// console.log("Rosters: " + JSON.stringify(this.rosters));
       });
 
     this.userIsAuthenticated = this.authService.getIsAuth();
-   // console.log("Authenticated ?" + this.userIsAuthenticated)
+    // console.log("Authenticated ?" + this.userIsAuthenticated)
 
     this.authStatus = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated
     })
-   // console.log("Authenticated ?" + this.userIsAuthenticated)
+    // console.log("Authenticated ?" + this.userIsAuthenticated)
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
@@ -103,32 +110,31 @@ export class PostCreateComponent implements OnInit {
     }
     form.resetForm();
   }
-  addMember(username:string,organization:string){
-   // console.log(username+" "+organization);
-    this.postService.moveFromRequestToCurrent(username,organization);
+  addMember(username: string, organization: string) {
+    // console.log(username+" "+organization);
+    this.postService.moveFromRequestToCurrent(username, organization);
   }
   makePresident(username: string, organization: string) {
     this.postService.getAllPresidents().subscribe(president => {
       this.presidents = president
       this.duplicatePresident = this.presidents.find((e: President) => e.organization === organization)
-      // console.log(this.duplicatePresident);
       if (this.duplicatePresident) {
-        //   alert('President for ' + organization + " club already exists!" )
-       // console.log("Updating President to " + username+" for "+organization);
+         alert("Updating President to " + username+" for "+organization)
         this.postService.deletePresident(organization);
         this.postService.makePresident(username, organization)
       }
       else {
-      //  console.log(this.username);
-       // alert('Request sent to join ' + organization + " club")
-       console.log("Creating President for " + organization);
-       this.postService.makePresident(username, organization)
+        alert("Creating President for " + organization);
+        this.postService.makePresident(username, organization)
       }
     });
 
   }
   deletePresidents(username: string) {
     this.postService.deletePresident(username);
+  }
+  removeCurrent(username: string) {
+    this.postService.deleteCurrent(username);
   }
 }
 

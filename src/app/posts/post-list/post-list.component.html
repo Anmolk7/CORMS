@@ -9,7 +9,7 @@
       <mat-card-content class="card-content">{{post.description}}<br></mat-card-content>
 
       <img class="image" mat-card-image src="{{post.picture}}">
-      <button *ngIf="userIsAuthenticated && userId!='5dcdfbc72b62ec465537226f' " mat-raised-button (click)="onJoin(post.name, JoinButton)" class="button" #JoinButton>JOIN</button>
+      <button *ngIf="userIsAuthenticated && userId!='5dcdfbc72b62ec465537226f'" mat-raised-button (click)="onJoin(post.name, JoinButton)" class="button" #JoinButton>JOIN</button>
       
       <button *ngIf="userIsAuthenticated && userId===post.creator"  mat-button class="icon" [routerLink]="['/orgedit',post.id]" routerLinkActive="router-link-active" ><mat-icon>edit</mat-icon> </button>
 

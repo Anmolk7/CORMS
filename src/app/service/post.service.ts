@@ -14,7 +14,7 @@ export class PostService {
   private posts: Post[] = [];
   private roster: Roster[] = [];
   private president: President[] = [];
-  private currMem: CurrMem[]=[];
+  private currMem: CurrMem[] = [];
   private postUpdated = new Subject<Post[]>();
   private rosterUpdated = new Subject<Roster[]>();
   private presidentUpdated = new Subject<President[]>();
@@ -71,9 +71,22 @@ export class PostService {
   getPostUpdateListener() {
     return this.postUpdated.asObservable();
   }
-  getCurrentMemberListener(){
+  getCurrentMemberListener() {
     return this.currMemUpdated.asObservable();
   }
+  getAllCurrentMembers() {
+    return this.http
+      .get<{ currMems: any }>(DEV_PATH + "/api/addmember")
+      .pipe(
+        map(memberData => {
+          return memberData.currMems.map(currMem => {
+            return {
+              username: currMem.username,
+              organization: currMem.organization
+            };
+          });
+        }))
+      }
 
   getAllMembers() {
     return this.http
@@ -91,21 +104,9 @@ export class PostService {
       )
 
   }
-  
+
+
   getCurrentMembers() {
-    // return this.http
-    // .get<{ currMems: any }>(DEV_PATH + "/api/addmem")
-    // .pipe(
-    //   map(memberData => {
-    //     //return id as _id
-    //     return memberData.currMems.map(currMem => {
-    //       return {
-    //         username: currMem.username,
-    //         organization: currMem.organization
-    //       };
-    //     });
-    //   })
-   // )
     this.http
       .get<{ message: string; currMems: any }>(DEV_PATH + "/api/addmember")
       .pipe(
@@ -123,7 +124,6 @@ export class PostService {
         this.currMem = transformedCurrMem;
         this.currMemUpdated.next([...this.currMem]);
       });
-
   }
   getPost(id: string) {
     return this.http.get<{ _id: string, name: string, description: string, picture: string, creator: string }>(DEV_PATH + "/api/posts/" + id);
@@ -144,18 +144,18 @@ export class PostService {
   }
   getAllPresidents() {
     return this.http
-    .get<{ presidents: any }>(DEV_PATH + "/api/makepres")
-    .pipe(
-      map(memberData => {
-        //return id as _id
-        return memberData.presidents.map(president => {
-          return {
-            username: president.username,
-            organization: president.organization
-          };
-        });
-      })
-    )
+      .get<{ presidents: any }>(DEV_PATH + "/api/makepres")
+      .pipe(
+        map(memberData => {
+          //return id as _id
+          return memberData.presidents.map(president => {
+            return {
+              username: president.username,
+              organization: president.organization
+            };
+          });
+        })
+      )
   }
   updatePost(id: string, name: string, description: string, picture: string) {
     const post: Post = {
@@ -175,22 +175,17 @@ export class PostService {
         this.postUpdated.next([...this.posts]);
       });
   }
-  updatePresident( id:string,username: string, organization: string) {
+  updatePresident(id: string, username: string, organization: string) {
     const president: President = {
       id: id,
-      username:username,
-      organization:organization
+      username: username,
+      organization: organization
     };
     this.http
       .patch(DEV_PATH + "/api/makepres/" + president.id, president)
-       .subscribe(response => {
-      //   const updatedPresidents = [...this.president];
-      //   const oldPostIndex = updatedPresidents.findIndex(p => p.username === president.username);
-      //   updatedPresidents[oldPostIndex] = president;
-      //   this.president = updatedPresidents;
-      //   this.presidentUpdated.next([...this.president]);
+      .subscribe(response => {
         console.log(response);
-          
+
       });
   }
   makePresident(username: string, organization: string) {
@@ -221,16 +216,26 @@ export class PostService {
       this.currMemUpdated.next([...this.currMem]);
     });
   }
-  moveFromRequestToCurrent(username: string, organization:string){
+  moveFromRequestToCurrent(username: string, organization: string) {
     this.http
-    .delete(DEV_PATH + "/api/join/" + username)
-    .subscribe(response => {
-      console.log(response);
-      const updatedRoster = this.roster.filter(roster => roster.username !== username);
-      this.roster = updatedRoster;
-      this.rosterUpdated.next([...this.roster]);
-    });
-    this.addMember(username,organization);
+      .delete(DEV_PATH + "/api/join/" + username)
+      .subscribe(response => {
+        console.log(response);
+        const updatedRoster = this.roster.filter(roster => roster.username !== username);
+        this.roster = updatedRoster;
+        this.rosterUpdated.next([...this.roster]);
+      });
+    this.addMember(username, organization);
+  }
+  deleteCurrent(username: string) {
+    this.http
+      .delete(DEV_PATH + "/api/addmember/" + username)
+      .subscribe(response => {
+        console.log(response);
+        const updatedCurrMem = this.currMem.filter(currMem => currMem.username !== username);
+        this.currMem = updatedCurrMem;
+        this.currMemUpdated.next([...this.currMem]);
+      });
   }
   deletePresident(username: string) {
     this.http
@@ -243,7 +248,7 @@ export class PostService {
       });
   }
 
-  
+
   addPosts(name: string, description: string, picture: string) {
     const post: Post = {
       id: null,
