@@ -4,6 +4,7 @@ import { AuthService } from '../auth/auth.service';
 import { Roster } from '../posts/roster.model';
 import { Subscription } from 'rxjs';
 import { PostService } from '../service/post.service';
+import { CurrMem } from '../posts/currMem.model';
 // const fs = require("fs");
 const DEV_PATH="http://localhost:3000";
 const PROD_PATH="https://corms-260220.appspot.com";
@@ -26,6 +27,8 @@ export class UserProfileComponent implements OnInit {
   rosterSub: Subscription;
   clubs: Roster[];
   userId: string="";
+  currentMembers: CurrMem[] = [];
+  private currMemSub: Subscription;
 
 
   constructor(private http: HttpClient, public authService: AuthService, public postService: PostService) { }
@@ -38,13 +41,19 @@ export class UserProfileComponent implements OnInit {
     console.log(this.imagepath);
     this.username = this.authService.getUsername();
     this.userId=this.authService.getUserId();
-    this.postService.getMembers();
-    this.rosterSub = this.postService.getRosterUpdateListener()
-      .subscribe((rosters: Roster[]) => {
-        this.rosters = rosters;
-        this.clubs = this.rosters.filter(roster => roster.username === this.username);
-        console.log(this.clubs);
-      });
+    this.postService.getCurrentMembers();
+    this.currMemSub = this.postService.getCurrentMemberListener().subscribe((currMem: CurrMem[]) => {
+      this.currentMembers = currMem;
+      this.clubs = this.currentMembers.filter(currMem => currMem.username === this.username);
+     // console.log(this.currentMembers);
+    });
+    // this.postService.getMembers();
+    // this.rosterSub = this.postService.getRosterUpdateListener()
+    //   .subscribe((rosters: Roster[]) => {
+    //     this.rosters = rosters;
+    //     this.clubs = this.rosters.filter(roster => roster.username === this.username);
+    //     console.log(this.clubs);
+    //   });
 
   }
 

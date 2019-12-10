@@ -20,8 +20,9 @@ router.get("", (req, res, next) => {
       });
     });
   });
-  router.delete("/:username", (req, res, nex) => {
-    CurrMem.deleteOne({username:req.params.username }).then(result => {
+  router.delete("/:username/:organization", (req, res, nex) => {
+    console.log(req.params.username+" "+req.params.organization);
+    CurrMem.deleteOne({username:req.params.username, organization:req.params.organization }).then(result => {
       if(result.n>0){
         res.status(200).json({ message: "Update successful" });
       }

@@ -21,8 +21,8 @@ router.get("", (req, res, next) => {
     });
   });
 
-  router.delete("/:username", checkAuth, (req, res, nex) => {
-    Roster.deleteOne({ username:req.params.username }).then(result => {
+  router.delete("/:username/:organization", checkAuth, (req, res, nex) => {
+    Roster.deleteOne({ username:req.params.username, organization:req.params.organization }).then(result => {
       if(result.n>0){
         res.status(200).json({ message: "Update successful" });
       }

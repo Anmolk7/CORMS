@@ -218,7 +218,7 @@ export class PostService {
   }
   moveFromRequestToCurrent(username: string, organization: string) {
     this.http
-      .delete(DEV_PATH + "/api/join/" + username)
+      .delete(DEV_PATH + "/api/join/" + username +"/"+organization)
       .subscribe(response => {
         console.log(response);
         const updatedRoster = this.roster.filter(roster => roster.username !== username);
@@ -227,9 +227,9 @@ export class PostService {
       });
     this.addMember(username, organization);
   }
-  deleteCurrent(username: string) {
+  deleteCurrent(username: string, organization:string) {
     this.http
-      .delete(DEV_PATH + "/api/addmember/" + username)
+      .delete(DEV_PATH + "/api/addmember/" + username + "/"+ organization)
       .subscribe(response => {
         console.log(response);
         const updatedCurrMem = this.currMem.filter(currMem => currMem.username !== username);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { PostService } from "../../service/post.service";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
@@ -17,6 +17,7 @@ import { CurrMem } from '../currMem.model';
   styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent implements OnInit {
+ 
   private mode = "create";
   private postId: string;
   post: Post = { id: null, name: "", description: "", picture: "", creator: "" };
@@ -66,7 +67,7 @@ export class PostCreateComponent implements OnInit {
     this.postService.getCurrentMembers();
     this.currMemSub = this.postService.getCurrentMemberListener().subscribe((currMem: CurrMem[]) => {
       this.currentMembers = currMem;
-      console.log(this.currentMembers);
+     // console.log(this.currentMembers);
     });
 
     this.postService.getMembers();
@@ -110,6 +111,22 @@ export class PostCreateComponent implements OnInit {
     }
     form.resetForm();
   }
+
+  findPresident(username:string, organization:string){
+    this.postService.getAllPresidents().subscribe(president=>{
+      this.presidents=president
+      this.duplicatePresident=this.presidents.find((e: President) => e.organization === organization && e.username===username)
+      if(this.duplicatePresident){
+        console.log("true");
+        return true;
+      }
+      else{
+        console.log("false");
+        return false;
+      }
+    })
+
+  }
   addMember(username: string, organization: string) {
     // console.log(username+" "+organization);
     this.postService.moveFromRequestToCurrent(username, organization);
@@ -133,8 +150,8 @@ export class PostCreateComponent implements OnInit {
   deletePresidents(username: string) {
     this.postService.deletePresident(username);
   }
-  removeCurrent(username: string) {
-    this.postService.deleteCurrent(username);
+  removeCurrent(username: string, organization:string) {
+    this.postService.deleteCurrent(username,organization);
   }
 }
 

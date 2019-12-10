@@ -28,19 +28,18 @@
 
 <div *ngIf="router.url!='/orgcreate'" class="member">
   <p style="text-align: center; font-size: 20px; color: whitesmoke; height: 35px;"> Current Members </p>
-  
-  <mat-accordion multi="true"  *ngFor="let current of currentMembers ">
+
+  <mat-accordion multi="true" *ngFor="let current of currentMembers ">
     <mat-expansion-panel style=" background-color:thistle;">
-      <mat-expansion-panel-header style="color: black; font-weight: bold ;">
-        <p *ngIf="current?.organization === presidents.organization">President </p>
+      <mat-expansion-panel-header style="color: black; font-weight: bold ;" *ngIf="post.name===current?.organization">
+        <!-- <p *ngIf="findPresident(current?.username, current?.organization)"> President </p> -->
         {{current.username}}
       </mat-expansion-panel-header>
       <mat-action-row>
-        <button mat-button style="color: whitesmoke; background-color: rgb(233, 61, 31);" (click)="removeCurrent(current.username)">DELETE</button>
+        <button mat-button style="color: whitesmoke; background-color: rgb(233, 61, 31);"
+          (click)="removeCurrent(current.username, post?.name)">DELETE</button>
         <button mat-button style="color: whitesmoke; background-color: rgb(225, 238, 51); color: black;"
-        (click)="makePresident(current.username,post?.name)"
-        >MAKE PRESIDENT</button>
-        
+          (click)="makePresident(current.username,post?.name)">MAKE PRESIDENT</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
@@ -54,7 +53,7 @@
       </mat-expansion-panel-header>
       <mat-action-row>
         <button mat-button style=" background-color: rgb(35, 207, 72);  color: whitesmoke;"
-        (click)="addMember(roster?.username,post?.name)">ADD</button>
+          (click)="addMember(roster?.username,post?.name)">ADD</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
