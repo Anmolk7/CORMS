@@ -22,7 +22,7 @@ router.get("", (req, res, next) => {
   });
 
   router.delete("/:organization", (req, res, nex) => {
-    President.deleteOne({organization:req.params.organization }).then(result => {
+    President.deleteMany({organization:req.params.organization }).then(result => {
       if(result.n>0){
         res.status(200).json({ message: "Update successful" });
       }

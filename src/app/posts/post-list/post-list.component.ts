@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Roster } from '../roster.model';
 import { MatButton } from '@angular/material';
 import { CurrMem } from '../currMem.model';
+import { President } from '../president.model';
 
 @Component({
   selector: "app-post-list",
@@ -25,6 +26,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   userId: string;
   username: string;
   duplicateRoster: Roster;
+  presidents: President[];
+  alreadyPresident: President;
   alreadyMember:CurrMem;
   requestCount: number = 0;
   rosterLength: number = 0;
@@ -74,7 +77,12 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.currMems=currMem
         this.alreadyMember=this.currMems.find((e:CurrMem)=>e.username===this.username && e.organization===organization)
         console.log(this.alreadyMember+" "+this.duplicateRoster);
-        if (!this.duplicateRoster && !this.alreadyMember) {
+        this.postService.getAllPresidents().subscribe(president=>{
+          this.presidents=president;
+          this.alreadyPresident=this.presidents.find(((e:President)=>e.username===this.username && e.organization===organization))
+
+      
+        if (!this.duplicateRoster && !this.alreadyMember && !this.alreadyPresident) {
           alert('Request sent to join ' + organization + " club")
           this.postService.joinOrg(this.username, organization)
         }
@@ -82,8 +90,13 @@ export class PostListComponent implements OnInit, OnDestroy {
         alert('You have already sent a request to join ' + organization + " club")
       }
       if(this.alreadyMember){
-        alert("You are already a member of "+organization);
+        alert("You are already a member of "+organization+" club");
       }
+      
+      if(this.alreadyPresident){
+        alert("You are the President of "+organization+" club");
+      }
+      })
       })
     });
   }

@@ -63,7 +63,9 @@ export class PostService {
         this.roster = transformedRosters;
         this.rosterUpdated.next([...this.roster]);
       });
-
+  }
+  getPresidentUpdateListener() {
+    return this.presidentUpdated.asObservable();
   }
   getRosterUpdateListener() {
     return this.rosterUpdated.asObservable();
@@ -102,9 +104,7 @@ export class PostService {
           });
         })
       )
-
   }
-
 
   getCurrentMembers() {
     this.http
@@ -156,6 +156,25 @@ export class PostService {
           });
         })
       )
+  }
+  getPresidents() {
+    this.http
+      .get<{ presidents: any }>(DEV_PATH + "/api/makepres")
+      .pipe(
+        map(memberData => {
+          //return id as _id
+          return memberData.presidents.map(president => {
+            return {
+              username: president.username,
+              organization: president.organization
+            };
+          });
+        })
+      )
+      .subscribe(transformedPresidents => {
+        this.president = transformedPresidents;
+        this.presidentUpdated.next([...this.president]);
+      });
   }
   updatePost(id: string, name: string, description: string, picture: string) {
     const post: Post = {
@@ -232,17 +251,17 @@ export class PostService {
       .delete(DEV_PATH + "/api/addmember/" + username + "/"+ organization)
       .subscribe(response => {
         console.log(response);
-        const updatedCurrMem = this.currMem.filter(currMem => currMem.username !== username);
+        const updatedCurrMem = this.currMem.filter(currMem => currMem.username !== username && currMem.organization !== organization);
         this.currMem = updatedCurrMem;
         this.currMemUpdated.next([...this.currMem]);
       });
   }
-  deletePresident(username: string) {
+  deletePresident(username: string, organization:string) {
     this.http
-      .delete(DEV_PATH + "/api/makepres/" + username)
+      .delete(DEV_PATH + "/api/makepres/"+organization)
       .subscribe(() => {
         console.log("Deleted!");
-        const updatedPresidents = this.president.filter(president => president.id !== username);
+        const updatedPresidents = this.president.filter(president => president.username !== username);
         this.president = updatedPresidents;
         this.presidentUpdated.next([...this.president]);
       });

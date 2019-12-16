@@ -9,8 +9,7 @@
             <input type="file" name="image" style="margin-left:20px ;" (change)="selectImage($event)" #filePicker />
             <br>
             <br>
-            <button color="primary" style="margin-left:20px ;" mat-raised-button type="submit"
-                (click)="onSubmit()">Upload</button>
+            <button color="primary" style="margin-left:20px ;" mat-raised-button type="submit">Upload</button>
             <br>
             <br>
 
@@ -19,22 +18,35 @@
             </mat-form-field>
 
             <div *ngIf="userId !='5dcdfbc72b62ec465537226f'">
-            <mat-list>
-                <mat-list-item>Club Memberships</mat-list-item>
-            </mat-list>
-            <mat-accordion multi="true" *ngFor="let club of clubs " title="Club Membership" >
-                <mat-expansion-panel style=" background-color:thistle;">
-                    <mat-expansion-panel-header style=" color:black; font-weight: bold ;">
-                        {{club?.organization}}
-                    </mat-expansion-panel-header>
-                    <mat-action-row>
-                        <button mat-button
-                            style=" background-color: rgb(182, 22, 22);  color: whitesmoke;">Unsubscribe</button>
-                    </mat-action-row>
-                </mat-expansion-panel>
-
-            </mat-accordion>
-        </div>
+                <mat-list>
+                    <mat-list-item>Club President</mat-list-item>
+                </mat-list>
+                <mat-accordion multi="true" *ngFor="let president of presidents " >
+                    <mat-expansion-panel style=" background-color:thistle;">
+                        <mat-expansion-panel-header style=" color:black; font-weight: bold ;">
+                            {{president?.organization}}
+                        </mat-expansion-panel-header>
+                        <mat-action-row>
+                            <button mat-button (click)="onLeave(president?.organization)"
+                                style=" background-color: rgb(182, 22, 22);  color: whitesmoke;">Leave</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-list>
+                    <mat-list-item>Club Memberships</mat-list-item>
+                </mat-list>
+                <mat-accordion multi="true" *ngFor="let club of clubs " title="Club Membership">
+                    <mat-expansion-panel style=" background-color:thistle;">
+                        <mat-expansion-panel-header style=" color:black; font-weight: bold ;">
+                            {{club?.organization}}
+                        </mat-expansion-panel-header>
+                        <mat-action-row>
+                            <button mat-button (click)="onUnsubscribe(club.organization)"
+                                style=" background-color: rgb(182, 22, 22);  color: whitesmoke;">Unsubscribe</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
 
 
         </form>

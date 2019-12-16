@@ -5,10 +5,11 @@ import { Roster } from '../posts/roster.model';
 import { Subscription } from 'rxjs';
 import { PostService } from '../service/post.service';
 import { CurrMem } from '../posts/currMem.model';
+import { President } from '../posts/president.model';
 // const fs = require("fs");
-const DEV_PATH="http://localhost:3000";
-const PROD_PATH="https://corms-260220.appspot.com";
-const IMAGE_PATH="";
+const DEV_PATH = "http://localhost:3000";
+const PROD_PATH = "https://corms-260220.appspot.com";
+const IMAGE_PATH = "";
 
 
 @Component({
@@ -26,35 +27,32 @@ export class UserProfileComponent implements OnInit {
   rosters: Roster[];
   rosterSub: Subscription;
   clubs: Roster[];
-  userId: string="";
+  userId: string = "";
   currentMembers: CurrMem[] = [];
-  private currMemSub: Subscription;
-
+  currMemSub: Subscription;
+  presidentSub: Subscription;
+  presidents: President[]=[];
 
   constructor(private http: HttpClient, public authService: AuthService, public postService: PostService) { }
-
   ngOnInit() {
-    // const path = "../../assets/image/" + this.authService.getUserId() + '.' + 'jpeg';
-    // if (fs.existsSync(path)) {
-      this.imagepath = "./../../../CORMS/CORMS/backend/CORMS/assets/image/" + this.authService.getUserId() + '.' + 'jpeg'
-    //}
+    this.imagepath = "../../assets/image/micheal_scott.jpeg"
     console.log(this.imagepath);
     this.username = this.authService.getUsername();
-    this.userId=this.authService.getUserId();
+    this.userId = this.authService.getUserId();
     this.postService.getCurrentMembers();
     this.currMemSub = this.postService.getCurrentMemberListener().subscribe((currMem: CurrMem[]) => {
       this.currentMembers = currMem;
       this.clubs = this.currentMembers.filter(currMem => currMem.username === this.username);
-     // console.log(this.currentMembers);
     });
-    // this.postService.getMembers();
-    // this.rosterSub = this.postService.getRosterUpdateListener()
-    //   .subscribe((rosters: Roster[]) => {
-    //     this.rosters = rosters;
-    //     this.clubs = this.rosters.filter(roster => roster.username === this.username);
-    //     console.log(this.clubs);
-    //   });
+    this.postService.getPresidents();
+    this.presidentSub = this.postService.getPresidentUpdateListener().subscribe((president: President[]) => {
+      this.presidents = president;
+      this.presidents = this.presidents.filter(president => president.username === this.username);
+    });
+  }
 
+  onUnsubscribe(organization: string) {
+    this.postService.deleteCurrent(this.username, organization)
   }
 
   selectImage(event) {
@@ -63,12 +61,14 @@ export class UserProfileComponent implements OnInit {
       this.images = file;
     }
   }
-
+  onLeave(organization:string){
+    this.postService.deletePresident(this.username,organization)
+  }
 
   onSubmit() {
     const formData = new FormData();
     formData.append('file', this.images);
-    this.http.post<any>(DEV_PATH+"/api/user/image", formData).subscribe(
+    this.http.post<any>(DEV_PATH + "/api/user/image", formData).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

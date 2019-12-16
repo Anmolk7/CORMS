@@ -21,14 +21,22 @@
       <button mat-raised-button color="warn" [routerLink]="['/orglist']" class="warnButton"
         type="submit">Cancel</button>
     </form>
-    <!-- <button mat-raised-button class="button" [routerLink]="['/orglist']" routerLinkActive="router-link-active" >Done</button> -->
   </mat-card>
 </div>
 
 
 <div *ngIf="router.url!='/orgcreate'" class="member">
+  <p style="text-align: center; font-size: 20px; color: whitesmoke; height: 35px;"> Club President </p>
+  <mat-accordion multi="true" *ngFor="let president of presidents ">
+    <mat-expansion-panel style=" background-color:thistle;">
+      <mat-expansion-panel-header style="color: black; font-weight: bold ;" *ngIf="post.name===president?.organization">
+        <!-- <p *ngIf="findPresident(current?.username, current?.organization)"> President </p> -->
+        {{president.username}}
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
   <p style="text-align: center; font-size: 20px; color: whitesmoke; height: 35px;"> Current Members </p>
-
   <mat-accordion multi="true" *ngFor="let current of currentMembers ">
     <mat-expansion-panel style=" background-color:thistle;">
       <mat-expansion-panel-header style="color: black; font-weight: bold ;" *ngIf="post.name===current?.organization">

@@ -25,6 +25,7 @@ export class PostCreateComponent implements OnInit {
   private authStatus: Subscription;
   private rosterSub: Subscription;
   private currMemSub: Subscription;
+  private presidentSub: Subscription;
   rosters: Roster[] = [];
   currentPresident: President;
   presidents: President[] = [];
@@ -43,11 +44,11 @@ export class PostCreateComponent implements OnInit {
 
 
   ngOnInit() {
-    this.username = this.authService.getUsername();
-    this.postService.getAllPresidents().subscribe(president => {
-      this.presidents = president
-      console.log("president "+JSON.stringify(this.presidents))
-    });
+    this.postService.getPresidents();
+    this.presidentSub=this.postService.getPresidentUpdateListener().subscribe((president: President[])=>{
+      this.presidents=president;
+      console.log(this.presidents);
+    }) 
     
     this.activeRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
@@ -63,27 +64,22 @@ export class PostCreateComponent implements OnInit {
       
       }
     });
-
     this.postService.getCurrentMembers();
     this.currMemSub = this.postService.getCurrentMemberListener().subscribe((currMem: CurrMem[]) => {
       this.currentMembers = currMem;
-     // console.log(this.currentMembers);
+      console.log(this.currentMembers);
     });
 
     this.postService.getMembers();
     this.rosterSub = this.postService.getRosterUpdateListener()
       .subscribe((rosters: Roster[]) => {
         this.rosters = rosters;
-        /// console.log("Rosters: " + JSON.stringify(this.rosters));
       });
 
     this.userIsAuthenticated = this.authService.getIsAuth();
-    // console.log("Authenticated ?" + this.userIsAuthenticated)
-
     this.authStatus = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated
     })
-    // console.log("Authenticated ?" + this.userIsAuthenticated)
   }
   onAddPost(form: NgForm) {
     if (form.invalid) {
@@ -114,8 +110,7 @@ export class PostCreateComponent implements OnInit {
 
   findPresident(username:string, organization:string){
     this.postService.getAllPresidents().subscribe(president=>{
-      this.presidents=president
-      this.duplicatePresident=this.presidents.find((e: President) => e.organization === organization && e.username===username)
+      this.duplicatePresident=president.find((e: President) => e.organization === organization && e.username===username)
       if(this.duplicatePresident){
         console.log("true");
         return true;
@@ -128,16 +123,15 @@ export class PostCreateComponent implements OnInit {
 
   }
   addMember(username: string, organization: string) {
-    // console.log(username+" "+organization);
     this.postService.moveFromRequestToCurrent(username, organization);
   }
   makePresident(username: string, organization: string) {
+    this.postService.deletePresident(username,organization);
     this.postService.getAllPresidents().subscribe(president => {
-      this.presidents = president
-      this.duplicatePresident = this.presidents.find((e: President) => e.organization === organization)
+      this.duplicatePresident = president.find((e: President) => e.organization === organization)
       if (this.duplicatePresident) {
          alert("Updating President to " + username+" for "+organization)
-        this.postService.deletePresident(organization);
+     
         this.postService.makePresident(username, organization)
       }
       else {
@@ -145,10 +139,10 @@ export class PostCreateComponent implements OnInit {
         this.postService.makePresident(username, organization)
       }
     });
-
+    
   }
-  deletePresidents(username: string) {
-    this.postService.deletePresident(username);
+  deletePresidents(username: string, organization:string) {
+    this.postService.deletePresident(username,organization);
   }
   removeCurrent(username: string, organization:string) {
     this.postService.deleteCurrent(username,organization);
