@@ -80,7 +80,6 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.postService.getAllPresidents().subscribe(president=>{
           this.presidents=president;
           this.alreadyPresident=this.presidents.find(((e:President)=>e.username===this.username && e.organization===organization))
-
       
         if (!this.duplicateRoster && !this.alreadyMember && !this.alreadyPresident) {
           alert('Request sent to join ' + organization + " club")
@@ -89,13 +88,15 @@ export class PostListComponent implements OnInit, OnDestroy {
       if(this.duplicateRoster){
         alert('You have already sent a request to join ' + organization + " club")
       }
+      if(this.alreadyPresident){
+        alert("You are the President of "+organization+" club");
+        this.alreadyMember=null;
+      }
       if(this.alreadyMember){
         alert("You are already a member of "+organization+" club");
       }
       
-      if(this.alreadyPresident){
-        alert("You are the President of "+organization+" club");
-      }
+     
       })
       })
     });
